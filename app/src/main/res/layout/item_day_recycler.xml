@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--day条目，即RecyclerView的子项布局，显示完成状态的主界面-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/item_fragment_recycler1"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+<!--显示fragment里的item选项-->
+    <TextView
+        android:id="@+id/date"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        />
+    <!--显示进度的完成情况-->
+    <LinearLayout
+        android:id="@+id/show_information"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="5"
+        >
+        <LinearLayout
+            android:id="@+id/show_things"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+            <TextView
+                android:id="@+id/show_all"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/show_havedone"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/show_havelosed"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/show_therest"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+            <!--显示进度完成情况-->
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleHorizontal"
+
+            />
+
+    </LinearLayout>
+<!--状态有已完成不可变、正在进行部分可变、还未完成可变-->
+    <ImageView
+        android:id="@+id/status"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="100dp"
+        android:src="@drawable/whale"
+        />
+
+</LinearLayout>

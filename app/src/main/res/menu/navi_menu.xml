@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+<item
+    android:id="@+id/nav_editor"
+    android:icon="@drawable/bull"
+    android:title="Editor"/>
+        <item
+            android:id="@+id/nav_alarm"
+            android:icon="@drawable/chick"
+            android:title="Alarm"/>
+        <item
+            android:id="@+id/nav_showlife"
+            android:icon="@drawable/koala"
+            android:title="ShowLife"/>
+        <item
+            android:id="@+id/nav_listener"
+            android:icon="@drawable/tiger"
+            android:title="Listener"/>
+
+
+    </group>
+</menu>

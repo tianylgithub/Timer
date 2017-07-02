@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <!--嵌入APP主界面里的碎片，是用来呈现day条目的 。 显示既往完成预览，以及今天完成度-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/editor_recycler"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

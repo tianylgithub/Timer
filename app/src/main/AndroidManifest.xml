@@ -2,19 +2,58 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.tyl.timer">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
     <application
+        android:name="com.example.tyl.timer.util.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+
+
+
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+
+
+        <activity  android:name=".activity.ShowInformationActivity" ></activity>
+
+
+
+        <activity android:name=".activity.dayHint"></activity>
+
+        <activity android:name=".activity.ItemEditorActivity"></activity>
+
+        <activity android:name=".activity.SelectActivity"></activity>
+
+        <receiver
+            android:name=".BroadcastReceiver.MyReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.timer.FUCK_UP"/>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+
+        </receiver>
+
+        <service
+            android:name=".service.MyService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
     </application>
 
 </manifest>
