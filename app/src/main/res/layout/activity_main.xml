@@ -4,22 +4,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:id="@+id/drawer_layout">
     <android.support.design.widget.CoordinatorLayout
         android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:fitsSystemWindows="true">
     <!--进入APP的主界面 碎片可以动态切换成笔记界面、图像概览（生、年、月、星期、）监视微信、qq、知乎、-->
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:fitsSystemWindows="true"
+            android:layout_height="250dp">
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:contentScrim="?attr/colorPrimary"
+                android:fitsSystemWindows="true"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:fitsSystemWindows="true"
+                android:src="@drawable/jobs"
+                app:layout_collapseMode="parallax"/>
         <android.support.v7.widget.Toolbar
             android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_scrollFlags="scroll|enterAlways|snap"/>
+            app:layout_collapseMode="pin"/>
+            </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
         <fragment
@@ -34,8 +50,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:src="@drawable/zen_icons_pen"
+            android:src="@drawable/dayfloat"
             android:layout_gravity="bottom|end"
+            android:scaleType="fitXY"
             app:layout_behavior="com.example.tyl.timer.util.MyFabBehavior"
             />
     </android.support.design.widget.CoordinatorLayout>
@@ -44,6 +61,7 @@
         android:id="@+id/navi_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="fitXY"
         android:layout_gravity="start"
         app:menu="@menu/navi_menu"
         app:headerLayout="@layout/navi_header">

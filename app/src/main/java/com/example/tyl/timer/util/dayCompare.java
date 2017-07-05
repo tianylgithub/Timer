@@ -8,7 +8,7 @@ import java.util.Comparator;
 
 public class DayCompare implements Comparator<Day> {
     @Override
-    public int compare(Day o1, Day o2) {
+    public int compare(Day o2, Day o1) {
         return  700*(o1.getYear() - o2.getYear()) + 35*(o1.getMonth() - o2.getMonth()) + (o1.getDay() - o2.getDay());    //排序规则
     }
 }

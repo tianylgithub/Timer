@@ -4,33 +4,47 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
     android:gravity="center">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#fffff0">
     <EditText
         android:id="@+id/year_editor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:inputType="numberDecimal"
         android:digits="0123456789"
         android:hint="请输入年份"
+        android:textSize="20sp"
         />
     <EditText
         android:id="@+id/month_editor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:inputType="numberDecimal"
         android:digits="0123456789"
-        android:hint="请输入月份"/>
+        android:hint="请输入月份"
+        android:textSize="20sp"
+        />
     <EditText
         android:id="@+id/day_editor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:inputType="numberDecimal"
         android:digits="0123456789"
-        android:hint="请输入日期"/>
+        android:hint="请输入日期"
+        android:textSize="20sp"/>
     <Button
         android:id="@+id/setDate_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="确定"/>
+        android:gravity="center"
+        android:text="确定"
+        android:textSize="20sp"/>
+    </LinearLayout>
 
 </LinearLayout>

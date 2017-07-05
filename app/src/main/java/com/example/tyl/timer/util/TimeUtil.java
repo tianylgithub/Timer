@@ -18,6 +18,9 @@ import static java.util.Calendar.getInstance;
 
 public class TimeUtil {
 
+
+
+
     //获取 单个(int)  年  月  日
     public static int getYear() {
         Calendar mCalendar =getInstance();
@@ -47,13 +50,21 @@ public class TimeUtil {
    {
        Calendar mCalendar = getInstance();
         return mCalendar.get(Calendar.MINUTE);
+
     }
+
+    public static long getNowMillis() {
+        Calendar mCalendar = getInstance();
+        return mCalendar.getTimeInMillis();
+    }
+
+
 
 
 //获取总的毫秒数
     public static   long   getMillis(int year,int month,int day,int hour,int minute){
         Calendar mCalendar = getInstance();
-        mCalendar.set(year,month-1,day,hour,minute);
+        mCalendar.set(year,(month-1),day,hour,minute);
         long millis = mCalendar.getTimeInMillis();
         Log.d("1970年开始", millis + "");
         return millis;
@@ -88,9 +99,5 @@ public class TimeUtil {
         date.setDay(day);
         return date;
     }
-
-
-
-
 
 }

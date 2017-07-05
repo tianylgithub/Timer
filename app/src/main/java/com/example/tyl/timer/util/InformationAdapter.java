@@ -1,13 +1,7 @@
 package com.example.tyl.timer.util;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,22 +11,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tyl.timer.BroadcastReceiver.MyReceiver;
 import com.example.tyl.timer.R;
-
-import com.example.tyl.timer.activity.ShowInformationActivity;
 import com.example.tyl.timer.activity.ItemEditorActivity;
+import com.example.tyl.timer.activity.SelectActivity;
+import com.example.tyl.timer.activity.ShowInformationActivity;
 import com.example.tyl.timer.fragment.EditorFragment;
-import com.example.tyl.timer.service.MyService;
 
 import java.util.List;
 
-import static android.content.Context.BIND_AUTO_CREATE;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-import static android.os.Build.VERSION_CODES.M;
-import static com.example.tyl.timer.R.id.main_fragment;
-import static com.example.tyl.timer.R.id.text_view;
-import static com.example.tyl.timer.fragment.EditorFragment.getDaysAdapter;
+import static com.example.tyl.timer.R.id.begin_time;
 
 
 /**
@@ -40,11 +27,20 @@ import static com.example.tyl.timer.fragment.EditorFragment.getDaysAdapter;
  */
 
 public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.ViewHolder> {
-
+//DAY 状态
     int InfoState;
     static final int FUTURE = 2;
-    static final int HAPPEND = 0;
     static final int NOW = 1;
+    static final int PAST = 0;
+    //INFO 状态
+    static final int NOTHING = -1;
+    static final int PLAN = 0;
+    static final int  WORKING= 1;
+    static final int FINISHED = 2;
+    static final int UNFINISHED = 3;
+    static final int WARING = 6;
+
+
 
     static ShowInformationActivity mEditorActivity;
 
@@ -53,8 +49,7 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
 
     class ViewHolder extends RecyclerView.ViewHolder {
         View mView;
-        TextView hour_view;
-        TextView minute_view;
+        TextView   beginTime;
         TextView lastTime;
         TextView text_view;
         Button alarm_button;
@@ -62,8 +57,7 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
         public ViewHolder(View view) {
             super(view);
             mView = view.findViewById(R.id.editor_button);
-            hour_view = (TextView) view.findViewById(R.id.hour_view);
-            minute_view = (TextView) view.findViewById(R.id.minute_view);
+            beginTime = (TextView) view.findViewById(begin_time);
             lastTime = (TextView) view.findViewById(R.id.lastTime);
             text_view = (TextView) view.findViewById(R.id.text_view);
             alarm_button = (Button) view.findViewById(R.id.alarm_button);
@@ -87,15 +81,8 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
                 Information information = mInformationList.get(position);
 
 
-
-
-
-
-
-
                 switch (InfoState) {     //根据天日期来决定0过去 1今天 未来2
-                    case HAPPEND:
-
+                    case PAST:
 
                         Toast.makeText(mEditorActivity, "不可对今天前的信息进行更改（逝者如斯，一去无返）", Toast.LENGTH_SHORT).show();
                         break;
@@ -104,24 +91,26 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
 
                     case NOW:
                         switch (information.getCompleted()) {
-                            case  -1:
+                            case  NOTHING:
                                 Intent intent = new Intent(mEditorActivity, ItemEditorActivity.class);
+
                                 intent.putExtra("position", position);
-                            //    intent.putExtra("id", information.getId());
                                 intent.putExtra("hour", information.getHour());
                                 intent.putExtra("minute", information.getMinute());
                                 intent.putExtra("information", information.getInformation());
                                 intent.putExtra("lastTime", information.getLastTme());
                                 mEditorActivity.startActivityForResult(intent, 123);
                                 break;
-                            case 0:
+
+
+                            case PLAN:
                                 Toast.makeText(mEditorActivity, "计划在轨，当先移取", Toast.LENGTH_SHORT).show();
                                 break;
-                            case 1:
+                            case WORKING:
                                 Toast.makeText(mEditorActivity, "因果已动，只有成败!", Toast.LENGTH_SHORT).show();
                                 break;
-                            case  2:
-                            case 3:
+                            case  FINISHED:
+                            case UNFINISHED:
 
                                 Toast.makeText(mEditorActivity, "凡已发生，皆不可移", Toast.LENGTH_SHORT).show();
                                 break;
@@ -130,15 +119,15 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
                     case FUTURE:
                         //状态是关于今天以后的，弹出条目编辑界面可对未来进行编辑   还未发生，默认
                         switch (information.getCompleted()) {
-                            case -1:
+                            case NOTHING:
                                 Intent intent = new Intent(mEditorActivity, ItemEditorActivity.class);
-//                                intent.putExtra("id", information.getId());
+                                intent.putExtra("position", position);
                                 intent.putExtra("hour", information.getHour());
                                 intent.putExtra("minute", information.getMinute());
                                 intent.putExtra("information", information.getInformation());
                                 mEditorActivity.startActivityForResult(intent, 123);
 
-                            case 0:
+                            case PLAN:
                                Toast.makeText(mEditorActivity,"计划在轨，当先移取",Toast.LENGTH_SHORT).show();
                             default:
                                 break;
@@ -146,7 +135,6 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
                 }
             }
         });
-
 
         //  设置是否开启任务,及注册alram任务，完成对数据库的操作（监控completed参数）
         holder.alarm_button.setOnClickListener(new View.OnClickListener() {
@@ -184,9 +172,9 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
                 int state = information.getCompleted();
 
                 switch (state) {
-                    case -1:
+                    case NOTHING:
 
-                        if ((information.getHour() != 0) || (information.getMinute() != 0)||(information.getLastTme()!=0) || (information.getInformation() != null)) {
+                        if (((information.getHour() != 0) || (information.getMinute() != 0))&& (information.getInformation() != null)&&(information.getLastTme()!=0)) {
 
                             //弹出对话在此完成设定并对数据库更新并改变条目颜色
                             AlertDialog.Builder dialog = new AlertDialog.Builder(InformationAdapter.this.mEditorActivity);
@@ -200,27 +188,30 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
 
                                 public void onClick(DialogInterface dialog, int which) {
 
-//                                    MyDatabaseHelper dbHelper = new MyDatabaseHelper(mEditorActivity, "Timer.db", null, 1);
 
-                                    if ((70 * (information.getHour() -TimeUtil.getHour()) + (information.getMinute() - TimeUtil.getMinuts())) > 0) {     //在启动时现实时间允许
-//                                        dbHelper.addInformation(information.getYear(), information.getMonth(), information.getDay(), information.getHour(),
-//                                                information.getMinute(),information.getLastTme(), information.getCompleted(), information.getInformation());
-
-                                        information.setCompleted(0);    //0的状态是已在安排中但未执行
-
-                                        MyDatabaseHelper.sMyDatabaseHelper.addInformation(information.getYear(), information.getMonth(), information.getDay(), information.getHour(),
-
-                                                information.getMinute(),information.getLastTme(), information.getCompleted(), information.getInformation());
-//                                            holder.alarm_button.setBackgroundResource(R.drawable.zen_icons_key);
-
-                                        ShowInformationActivity.mAdapter.notifyDataSetChanged();
-
-                                        mEditorActivity.getmAlarmBinder().startAlarm(information.getYear(), information.getMonth(), information.getDay(), information.getHour(), information.getMinute(), information.getLastTme(),information.getInformation());
+                                    if ((TimeUtil.getMillis(information.getYear(),information.getMonth(),information.getDay(),information.getHour(),information.getMinute())-TimeUtil.getNowMillis())>0){     //在启动时现实时间允许
+//
+                                        if (!MyDatabaseHelper.sMyDatabaseHelper.haveInfo(information)) {
 
 
-                                        Day day = EditorFragment.getmDays().get(mEditorActivity.getPosition());
-                                        day.plusTheRest();
-                                        EditorFragment.getDaysAdapter().notifyDataSetChanged();
+                                            information.setCompleted(0);    //0的状态是已在安排中但未执行
+
+                                            MyDatabaseHelper.sMyDatabaseHelper.addInformation(information.getYear(), information.getMonth(), information.getDay(), information.getHour(),
+
+                                                    information.getMinute(), information.getLastTme(), information.getCompleted(), information.getInformation());
+//
+
+                                            ShowInformationActivity.mAdapter.notifyDataSetChanged();
+
+                                            mEditorActivity.getmAlarmBinder().startAlarm(information.getYear(), information.getMonth(), information.getDay(), information.getHour(), information.getMinute(), information.getLastTme(), information.getInformation());
+
+                                            Day day = EditorFragment.getmDays().get(mEditorActivity.getPosition());
+                                            day.plusAll();
+                                            day.plusTheRest();
+                                            EditorFragment.getDaysAdapter().notifyDataSetChanged();
+
+                                        }else {
+                                            Toast.makeText(mEditorActivity, "该时刻已存在,不可在一个时间点做两件事！", Toast.LENGTH_SHORT).show();}
 
                                     } else {
                                         Toast.makeText(mEditorActivity, "午时已过", Toast.LENGTH_SHORT).show();
@@ -228,7 +219,6 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
 
                                 }
                             });
-
                             dialog.setNegativeButton("我在考虑下", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
@@ -236,15 +226,15 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
                                     }
                             );
                             dialog.show();
-
                         } else {
                             Toast.makeText(mEditorActivity, "毫无计划，漏洞百出", Toast.LENGTH_SHORT).show();
                         }
-
-
                         break;
 
-                    case 0:
+
+
+
+                    case PLAN:
                         //已经启动却未发生的，弹出对话框是否更改，是的话从数据库删除条目，并将该条目在list中的状态变为-1
                         AlertDialog.Builder dialog = new AlertDialog.Builder(InformationAdapter.this.mEditorActivity);
                         dialog.setTitle("注意");
@@ -254,10 +244,9 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-
-                                MyDatabaseHelper dbHelper = new MyDatabaseHelper(mEditorActivity, "Timer.db", null, 1);
-                                information.setCompleted(-1);
-                                dbHelper.deletInformation(information.getYear(), information.getMonth(), information.getDay(), information.getHour(),
+                               if ((TimeUtil.getMillis(information.getYear(),information.getMonth(),information.getDay(),information.getHour(),information.getMinute())-TimeUtil.getNowMillis())>0){
+                                   information.setCompleted(-1);
+                                MyDatabaseHelper.sMyDatabaseHelper.deletInformation(information.getYear(), information.getMonth(), information.getDay(), information.getHour(),
                                         information.getMinute());
 
                                 ShowInformationActivity.mAdapter.notifyDataSetChanged();
@@ -265,8 +254,10 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
                                 mEditorActivity.getmAlarmBinder().cancelAlarm(information.getYear(), information.getMonth(), information.getDay(), information.getHour(), information.getMinute());
 
                                 Day day = EditorFragment.getmDays().get(mEditorActivity.getPosition());
+                                   day.minusAll();
                                 day.minusTheRest();
                                 EditorFragment.getDaysAdapter().notifyDataSetChanged();
+                            }else {    Toast.makeText(mEditorActivity, "午时已过", Toast.LENGTH_SHORT).show();}
                             }
                         });
 
@@ -280,27 +271,25 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
 
                         break;
 
-                    case 1:                  //正在发生中
+                    case WORKING:                  //正在发生中
                         Toast.makeText(mEditorActivity, "因果已动，只有成败！", Toast.LENGTH_SHORT).show();
                         break;
-                    case 2:
-                    case 3:
+                    case FINISHED:
+                    case UNFINISHED:
                         Toast.makeText(mEditorActivity, "凡已发生，皆不可移", Toast.LENGTH_SHORT).show();
                         break;
-                    default:
+                    case WARING:
+                        Toast.makeText(mEditorActivity, "你不去记录结果还妄图更改？你TM到底在想什么", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(mEditorActivity, SelectActivity.class);
+                        intent.putExtra("year", information.getYear());
+                        intent.putExtra("month", information.getMonth());
+                        intent.putExtra("day", information.getDay());
+                        intent.putExtra("hour", information.getHour());
+                        intent.putExtra("minute", information.getMinute());
+                        intent.putExtra("information", information.getInformation());
+                        mEditorActivity.startActivity(intent);
                         break;
                 }
-
-
-
-
-
-
-
-
-
-
-
             }
         });
         return holder;
@@ -312,24 +301,36 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         Information information = mInformationList.get(position);
         if(information!=null) {
-            holder.hour_view.setText(information.getHour() + "小时");
-            holder.minute_view.setText(information.getMinute() + "分钟");
-            holder.text_view.setText("需用时"+information.getInformation()+"分钟");
+
+            holder.beginTime.setText("Start:"+information.getHour()+":"+information.getMinute());
+            holder.lastTime.setText("Cost:"+information.getLastTme()+"min");
+            holder.text_view.setText("Plan:"+information.getInformation());
             switch (information.getCompleted()) {
-                case 0:
-                    holder.alarm_button.setBackgroundResource(R.mipmap.ic_launcher);   //还未到
+                case PLAN:
+                    holder.alarm_button.setBackgroundResource(R.drawable.inforture);   //还未到
+                    holder.mView.setBackgroundColor(Color.parseColor("#00EEEE"));
                     break;
-                case 1:
-                    holder.alarm_button.setBackgroundResource(R.drawable.zen_icons_key);   //正在进行
+                case WORKING:
+                    holder.alarm_button.setBackgroundResource(R.drawable.infoworiking);   //正在进行
+                    holder.mView.setBackgroundColor(Color.parseColor("#00C5CD"));
                     break;
-                case 2:
-                    holder.alarm_button.setBackgroundResource(R.drawable.zen_icons_lock_closed );   //已经完成
+                case FINISHED:
+                    holder.alarm_button.setBackgroundResource(R.drawable.infofinish );   //已经完成
+                    holder.mView.setBackgroundColor(Color.parseColor("#00688B"));
                     break;
-                case 3:
-                    holder.alarm_button.setBackgroundResource(R.drawable.zen_icons_mail_empty);   //没有完成
+                case UNFINISHED:
+                    holder.alarm_button.setBackgroundResource(R.drawable.infolosed);   //没有完成
+                    holder.mView.setBackgroundColor(Color.parseColor("#00688B"));
                     break;
-                case -1:
-                    holder.alarm_button.setBackgroundResource(R.drawable.zen_icons_lock_open);   //混沌之初
+                case NOTHING:
+                    holder.alarm_button.setBackgroundResource(R.drawable.infornothing);   //混沌之初
+                    holder.mView.setBackgroundColor(Color.parseColor("#00688B"));
+                    break;
+                case WARING:
+                    holder.alarm_button.setBackgroundResource(R.drawable.infofinishbutnocomfurm);   //已结束但还没确认的信息
+                    holder.mView.setBackgroundColor(Color.parseColor("#FFFF00"));
+                    break;
+                default:
                     break;
             }
         }

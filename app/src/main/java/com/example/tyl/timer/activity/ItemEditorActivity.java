@@ -13,12 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
 import com.example.tyl.timer.R;
-
-import static android.R.attr.dial;
-import static android.app.Activity.RESULT_OK;
-import static com.example.tyl.timer.R.id.lastTime;
 
 
 /**
@@ -31,8 +26,7 @@ public class ItemEditorActivity extends AppCompatActivity {
     EditText mEditText;
     EditText mTaskEditor;
     Button set_Button;
-    int id;
- static    int position;
+     int position;
 
 
     class mTextWatcher implements TextWatcher {
@@ -44,23 +38,13 @@ public class ItemEditorActivity extends AppCompatActivity {
         }
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//           if(s!=null){
-//            int num = Integer.valueOf(s.toString());
-//            if (num == 1) {
-//                mEditText.setText("");
-//            }
-//            }
+
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if(!(s.toString().equals(""))){
                 int num = Integer.valueOf(s.toString());
-//            int len = s.toString().length();
-//            if (len == 2&& num==0) {
-//                Toast.makeText(ItemEditorActivity.this, "不能以0开头!", Toast.LENGTH_SHORT).show();
-//                mEditText.setText("");
-//            }
                 switch (mEditText.getId()) {
                     case R.id.hour_text:
                         if (num > 23) {
@@ -95,34 +79,25 @@ public class ItemEditorActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editor_information_activity);
-
         mHourEditor = (EditText) findViewById(R.id.hour_text);
-
         mMinutEditor = (EditText) findViewById(R.id.minute_text);
 
 
         mTaskEditor = (EditText) findViewById(R.id.task_text);
         mEditText = (EditText) findViewById(R.id.last_text);
-
          Intent intent = getIntent();
-      //  id = intent.getIntExtra("id", -1);
+
         position = intent.getIntExtra("position", -1);
 
         int hour = intent.getIntExtra("hour", 0);
         mHourEditor.setText(hour==0? "":hour+"");
-
         mHourEditor.addTextChangedListener(new mTextWatcher(mHourEditor));
-
         int minute = intent.getIntExtra("minute", 0);
         mMinutEditor.setText(minute==0? "":minute+"");
         mMinutEditor.addTextChangedListener(new mTextWatcher(mMinutEditor));
-
-
         int lastTime = intent.getIntExtra("lastTime", 0);
         mEditText.setText(lastTime==0? "":lastTime+"");
-
         mEditText.addTextChangedListener(new mTextWatcher(mEditText));
-
         mTaskEditor.setText(intent.getStringExtra("information")+"");
 
         set_Button = (Button) findViewById(R.id.set_button);
@@ -137,17 +112,14 @@ public class ItemEditorActivity extends AppCompatActivity {
                 String lastTime = mEditText.getText().toString();
                 String information = mTaskEditor.getText().toString();
 
-
-
                 Intent intentResult = new Intent();
-//                intentResult.putExtra("ID", id);
                 intentResult.putExtra("hour", hour);
                 intentResult.putExtra("minute", minute);
                 intentResult.putExtra("lastTime", lastTime);
                 intentResult.putExtra("information", information);
                 intentResult.putExtra("position", position);
                 setResult(RESULT_OK,intentResult);
-                finish();
+               ItemEditorActivity.this.finish();
 
             }
         });

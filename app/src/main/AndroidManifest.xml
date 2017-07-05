@@ -6,34 +6,35 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
-        android:name="com.example.tyl.timer.util.MyApplication"
+        android:name=".util.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:icon="@mipmap/applogo"
+        android:label="时间表"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-
-        <activity android:name=".activity.MainActivity">
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/DayActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-
-
-        <activity  android:name=".activity.ShowInformationActivity" ></activity>
-
-
-
-        <activity android:name=".activity.dayHint"></activity>
-
-        <activity android:name=".activity.ItemEditorActivity"></activity>
-
-        <activity android:name=".activity.SelectActivity"></activity>
+        <activity android:name=".activity.ShowInformationActivity"/>
+        <activity
+            android:name=".activity.informationHint"
+            android:theme="@style/translucent"/>
+        <activity
+            android:name=".activity.dayHint"
+            android:theme="@style/translucent"/>
+        <activity
+            android:name=".activity.ItemEditorActivity"
+            android:theme="@style/translucent"/>
+        <activity
+            android:name=".activity.SelectActivity"
+            android:theme="@style/translucent"/>
 
         <receiver
             android:name=".BroadcastReceiver.MyReceiver"
@@ -42,11 +43,9 @@
             <intent-filter>
                 <action android:name="com.example.timer.FUCK_UP"/>
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
-
         </receiver>
 
         <service
@@ -54,6 +53,16 @@
             android:enabled="true"
             android:exported="true">
         </service>
+
+        <activity
+            android:name=".activity.Search"
+            android:launchMode="singleTask"
+            android:theme="@style/translucent">
+        </activity>
+        <activity android:name=".activity.appExplain"
+                  android:launchMode="singleTask"
+            >
+        </activity>
     </application>
 
 </manifest>

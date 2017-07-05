@@ -1,6 +1,5 @@
 package com.example.tyl.timer.fragment;
 
-;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -20,13 +19,13 @@ import com.example.tyl.timer.util.DayCompare;
 import com.example.tyl.timer.util.DaysAdapter;
 import com.example.tyl.timer.util.DefaultItemTouchHelpCallback;
 import com.example.tyl.timer.util.DefaultItemTouchHelper;
-import com.example.tyl.timer.util.Information;
 import com.example.tyl.timer.util.MyDatabaseHelper;
-import com.example.tyl.timer.util.TimeUtil;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+
+
 
 /**1、碎片中加载daylist并呈现信息                 y
  *
@@ -44,6 +43,14 @@ import java.util.List;
 //以天为单位展示任务的完成情况，点击可以 进入当天的编辑
 public class EditorFragment extends Fragment {
 
+
+
+    static final int NOTHING= -1;
+    static final  int   PAST = 0;
+    static final   int NOW = 1;
+    static final   int FUTURE=2;
+
+
     private static List<Day>   mDays;
         RecyclerView mRecyclerView;
    static FloatingActionButton mFloatingActionButton;
@@ -60,9 +67,9 @@ public class EditorFragment extends Fragment {
         return mDays;
     }
 
-    public static void setmDays(List<Day> mDays) {
-        EditorFragment.mDays = mDays;
-    }
+//    public static void setmDays(List<Day> mDays) {
+//        EditorFragment.mDays = mDays;
+//    }
 
     /**
      * 滑动 对不同状态下的Day效果不同
@@ -75,17 +82,17 @@ public class EditorFragment extends Fragment {
                 Day day = mDays.get(adapterPosition);
 
                 switch (day.getStatus()) {
-                    case -1:                                                             // 删除一个新建的空壳
+                    case NOTHING:                                                             // 删除一个新建的空壳
                         mDays.remove(adapterPosition);
                         daysAdapter.notifyItemRemoved(adapterPosition);
 //                        daysAdapter.notifyDataSetChanged();
                         Toast.makeText(getActivity(), "删除成功", Toast.LENGTH_SHORT).show();
-                    case 0:                                                             //已经发生的  昨日
-                    case 1:                                                             //正在发生的  今天
+                    case PAST:                                                             //已经发生的  昨日
+                    case NOW:                                                             //正在发生的  今天
                         Toast.makeText(getActivity(), "凡已发生，皆不可移！", Toast.LENGTH_SHORT).show();
                         daysAdapter.notifyDataSetChanged();
                         break;
-                    case 2:                                                             //还未发生的  未来
+                    case FUTURE:                                                             //还未发生的  未来
                         if (MyDatabaseHelper.sMyDatabaseHelper.getList(day.getYear(), day.getMonth(), day.getDay()).size()!=0) {
 
                             Toast.makeText(getActivity(), "计划在轨，当先移取", Toast.LENGTH_SHORT).show();
@@ -133,44 +140,15 @@ public class EditorFragment extends Fragment {
         mFloatingActionButton.setOnClickListener(new   View.OnClickListener(){
             @Override
             public void onClick(View v) {
+
                 Day day = new Day();
                 mDays.add(0,day);
                 daysAdapter.notifyItemInserted(0);
-//                daysAdapter.notifyDataSetChanged();
+//                daysAdapter.notifyDataSetChanged()
+                Toast.makeText(getActivity(), "创建成功,请点击编辑", Toast.LENGTH_SHORT).show();
             }
         });
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

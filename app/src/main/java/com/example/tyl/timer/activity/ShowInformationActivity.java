@@ -4,7 +4,7 @@ import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.icu.text.LocaleDisplayNames;
+
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -16,7 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,7 +24,7 @@ import com.example.tyl.timer.R;
 import com.example.tyl.timer.service.MyService;
 import com.example.tyl.timer.util.DefaultItemTouchHelpCallback;
 import com.example.tyl.timer.util.DefaultItemTouchHelper;
-import com.example.tyl.timer.util.TimeUtil;
+
 import com.example.tyl.timer.util.Information;
 import com.example.tyl.timer.util.InformationAdapter;
 import com.example.tyl.timer.util.InformationCompare;
@@ -33,7 +33,6 @@ import com.example.tyl.timer.util.MyDatabaseHelper;
 import java.util.Collections;
 import java.util.LinkedList;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 /**
  * Created by TYL on 2017/6/12.
@@ -65,7 +64,29 @@ public class ShowInformationActivity extends AppCompatActivity{
 
     private static  LinkedList<Information> editorlist ;
 
+
+    public static InformationAdapter getmAdapter() {
+        return mAdapter;
+    }
+
+//    public static void setmAdapter(InformationAdapter mAdapter) {
+//        ShowInformationActivity.mAdapter = mAdapter;
+//    }
+
+
+    public static LinkedList<Information> getEditorlist() {
+        return editorlist;
+    }
+//
+//    public static void setEditorlist(LinkedList<Information> editorlist) {
+//        ShowInformationActivity.editorlist = editorlist;
+//    }
+
     MyDatabaseHelper mMyDatabaseHelper =MyDatabaseHelper.sMyDatabaseHelper;
+
+    /**
+     *  滑动删除监听
+     */
 
     DefaultItemTouchHelpCallback.OnItemTouchCallbackListener onItemTouchCallbackListener = new DefaultItemTouchHelpCallback.OnItemTouchCallbackListener() {
         @Override
@@ -79,7 +100,6 @@ public class ShowInformationActivity extends AppCompatActivity{
 
                     case 1:
                         Toast.makeText(ShowInformationActivity.this, "历史已进入，势无可挡", Toast.LENGTH_SHORT).show();
-                        finish();
                         mAdapter.notifyDataSetChanged();
                         break;
                     case 2:
@@ -90,8 +110,12 @@ public class ShowInformationActivity extends AppCompatActivity{
                     case -1:
                         editorlist.remove(adapterPosition);
                        mAdapter.notifyItemRemoved(adapterPosition);
+                        Toast.makeText(ShowInformationActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
 //                        mAdapter.notifyDataSetChanged();
                         break;
+                    default:
+                        break;
+
                 }
             }
         }
@@ -139,8 +163,6 @@ public class ShowInformationActivity extends AppCompatActivity{
 
         editorlist = mMyDatabaseHelper.getList(year, month, day);
 
-
-
         Collections.sort(editorlist, new InformationCompare());   //          给information排序
         mAdapter = new InformationAdapter(editorlist,this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -160,22 +182,33 @@ public class ShowInformationActivity extends AppCompatActivity{
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Information addInformation = new Information();
-                    addInformation.setYear(year);
-                addInformation.setMonth(month);
-                addInformation.setDay(day);
-                addInformation.setCompleted(-1);
-                editorlist.add(0,addInformation);
-               mAdapter.notifyItemInserted(0);
-//                mAdapter.notifyDataSetChanged();
 
+                switch (stateFromDay) {
+                    case 0:
+                    case  -1:
+                        Toast.makeText(ShowInformationActivity.this, "过去不会再来,请把握现在", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Information addInformation = new Information();
+                        addInformation.setYear(year);
+                        addInformation.setMonth(month);
+                        addInformation.setDay(day);
+                        addInformation.setCompleted(-1);
+                        editorlist.add(0, addInformation);
+                        mAdapter.notifyItemInserted(0);
+                        Toast.makeText(ShowInformationActivity.this,"创建成功,请点击编辑",Toast.LENGTH_SHORT).show();
+//                mAdapter.notifyDataSetChanged()
+                        break;
+
+                }
             }
         });
         setSupportActionBar(mToolbar);
+
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(year+"-"+month+"-"+day);
         if(actionBar!=null){
             actionBar.setDefaultDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.zen_icons_key);
         }
     }
 
@@ -216,6 +249,7 @@ public class ShowInformationActivity extends AppCompatActivity{
                     information.setLastTme(Integer.valueOf(lastTime.equals("") ? "0" : lastTime));
                     information.setInformation(data.getStringExtra("information"));
                     mAdapter.notifyDataSetChanged();
+                    break;
                 }
         }
     }
@@ -239,9 +273,8 @@ public class ShowInformationActivity extends AppCompatActivity{
             }
         });
         dialog.show();
-
-
     }
+
 
     @Override
     protected void onDestroy() {

@@ -6,32 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="250dp">
-        <android.support.design.widget.CollapsingToolbarLayout
+        android:layout_height="wrap_content">
 
-           android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:contentScrim="?attr/colorPrimary"
-           app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            >
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/crab"
-                app:layout_collapseMode="parallax"/>
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin">
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                android:background="#7CFC00"
+                >
 
             </android.support.v7.widget.Toolbar>
-
-        </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -46,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:src="@drawable/zen_icons_pen"
+        android:src="@drawable/infofloat"
         android:layout_gravity="bottom|end"
         app:layout_behavior="com.example.tyl.timer.util.MyFabBehavior"
         >

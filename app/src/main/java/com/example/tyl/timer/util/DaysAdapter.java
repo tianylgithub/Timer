@@ -2,6 +2,7 @@ package com.example.tyl.timer.util;
 
 import android.app.Application;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import com.example.tyl.timer.activity.MainActivity;
 import com.example.tyl.timer.activity.ShowInformationActivity;
 import com.example.tyl.timer.activity.dayHint;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 /**
@@ -26,12 +29,14 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
 
 
 
-    int mCurrentYear = TimeUtil.getYear();
-    int mCurrentMonth = TimeUtil.getMonth();
-    int mCurrentDay = TimeUtil.getDay();
+//    int mCurrentYear = TimeUtil.getYear();
+//    int mCurrentMonth = TimeUtil.getMonth();
+//    int mCurrentDay = TimeUtil.getDay();
 
 
-    int   dayState;
+//    int   dayState;
+
+    static final int NOTHING= -1;
     static final  int   PAST = 0;
     static final   int NOW = 1;
     static final   int FUTURE=2;
@@ -42,6 +47,7 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView date;
+//        View show_information;
         TextView show_all;
         TextView show_haveDone;
         TextView show_haveLosed;
@@ -53,6 +59,7 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
         public ViewHolder(View view) {
             super(view);
             dayView = view;
+//            show_information =  view.findViewById(R.id.show_information);
             date = (TextView) view.findViewById(R.id.date);
             show_all = (TextView) view.findViewById(R.id.show_all);
             show_haveDone = (TextView) view.findViewById(R.id.show_havedone);
@@ -127,24 +134,31 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         Day day = mDayList.get(position);
-       holder.date.setText(day.getYear()+"年"+day.getMonth()+"月"+day.getDay()+"日");
-        holder.show_theRest.setText("剩下:" + day.getTheRest());
-        holder.show_haveDone.setText("已完成:" + day.getDone());
-        holder.show_haveLosed.setText("未完成:" + day.getLosed());
+       holder.date.setText(day.getYear()+"-"+day.getMonth()+"-"+day.getDay());
+        holder.show_all.setText("计划:"+day.getAll());
+        holder.show_theRest.setText("待办:" + day.getTheRest());
+        holder.show_haveDone.setText("完成:" + day.getDone());
+        holder.show_haveLosed.setText("失败:" + day.getLosed());
         holder.mProgressBar.setMax(day.getAll());
-        holder.mProgressBar.setProgress(day.getDone()+day.getLosed());
+        holder.mProgressBar.setProgress(day.getDone());
 
 
         switch (day.getStatus()) {
-            case 0:
-                holder.status.setImageResource(R.drawable.axes);   //过去的
+            case PAST:
+                holder.status.setImageResource(R.drawable.daypast);   //过去的
+//                holder.show_information.setBackgroundColor(Color.parseColor("#CC99090"));    //灰色
                 break;
-            case 1:
-                holder.status.setImageResource(R.drawable.canoe); //现在的
+            case NOW:
+                holder.status.setImageResource(R.drawable.daynow); //现在的
+//                holder.show_information.setBackgroundColor(Color.parseColor("#33CCFF"));        //蓝色
                 break;
-            case 2:
-            case -1:
-                holder.status.setImageResource(R.drawable.feathers);//未来的
+            case FUTURE:
+                holder.status.setImageResource(R.drawable.dayfuturehaveinfo);//未来的有info
+//                holder.show_information.setBackgroundColor(Color.parseColor("#FF99FF"));   //  紫红色
+                break;
+            case NOTHING:
+                holder.status.setImageResource(R.drawable.dayfuturenoinfo);//未来的没有info
+//                holder.show_information.setBackgroundColor(Color.parseColor("#FFFF00"));   //黄色
                 break;
         }
 

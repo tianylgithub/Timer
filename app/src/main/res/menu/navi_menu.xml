@@ -2,22 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
 <item
-    android:id="@+id/nav_editor"
-    android:icon="@drawable/bull"
-    android:title="Editor"/>
+    android:id="@+id/nav_today"
+    android:icon="@drawable/navimenu1"
+    android:title="查看今天"/>
         <item
-            android:id="@+id/nav_alarm"
-            android:icon="@drawable/chick"
-            android:title="Alarm"/>
+            android:id="@+id/nav_search"
+            android:icon="@drawable/navimenu2"
+            android:title="搜索"/>
         <item
             android:id="@+id/nav_showlife"
-            android:icon="@drawable/koala"
-            android:title="ShowLife"/>
+            android:icon="@drawable/navimenu3"
+            android:title="图谱"/>
         <item
             android:id="@+id/nav_listener"
-            android:icon="@drawable/tiger"
-            android:title="Listener"/>
+            android:icon="@drawable/navimenu4"
+            android:title="监听器"/>
 
+        <item
+            android:id="@+id/nav_tips"
+            android:icon="@drawable/navimenu5"
+            android:title="说明"/>
 
     </group>
 </menu>

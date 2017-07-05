@@ -10,9 +10,9 @@ public class Day {
     private int mLosed;
     private int mTheRest;
     private int year;
-    int month;
-    int day;
-    int status=-1;              // PAST=0; NOW=1,FUTURE=2
+  private   int month;
+    private    int day;
+    private  int status= -1;              // PAST=0; NOW=1,FUTURE=2
 
 
 
@@ -95,6 +95,18 @@ public class Day {
     public void minusTheRest() {
         mTheRest = mTheRest - 1;
     }
+
+
+    public void plusLosed() {
+        mLosed = mLosed + 1;
+    }
+
+    public void plusDone() {
+        mDone = mDone + 1;
+    }
+
+
+
 
 
 }

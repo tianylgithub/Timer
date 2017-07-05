@@ -1,6 +1,5 @@
 package com.example.tyl.timer.activity;
 
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,9 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import android.widget.Toast;
+
 import com.example.tyl.timer.R;
 import com.example.tyl.timer.util.MyDatabaseHelper;
 import com.example.tyl.timer.util.TimeUtil;
+
+
 
 
 /**
@@ -119,11 +121,10 @@ public class dayHint    extends AppCompatActivity {
                 } else if((700*(intYear- TimeUtil.getYear())+50*(intMonth-TimeUtil.getMonth())+intDay-TimeUtil.getDay())<=0){
                     Toast.makeText(dayHint.this, "你只能对今天以后做些什么！", Toast.LENGTH_SHORT).show();
                     return;
-                }
-                if(MyDatabaseHelper.mSQLiteDatabase.query("TABLE_DAY",null,"year=? AND month=? AND day=?",new String[]{year+"",month+"",day+""},null,null,null).getCount()!=0){
+                }else if(MyDatabaseHelper.mSQLiteDatabase.query("TABLE_DAY",null,"year=? AND month=? AND day=?",new String[]{year+"",month+"",day+""},null,null,null).getCount()!=0){
                     Toast.makeText(dayHint.this, "日期已经存在，请移步编辑", Toast.LENGTH_SHORT).show();
-                    finish();
-                }else {
+                        dayHint.this.finish();
+                } else  {
                     Intent intent = new Intent();
                     intent.putExtra("year", intYear);
                     intent.putExtra("month", intMonth);
@@ -131,7 +132,6 @@ public class dayHint    extends AppCompatActivity {
                     intent.putExtra("positon", position);
                     setResult(RESULT_OK, intent);
                     dayHint.this.finish();
-
                 }
             }
         });
@@ -158,5 +158,6 @@ public class dayHint    extends AppCompatActivity {
         });
         dialog.show();
     }
+
 
 }
