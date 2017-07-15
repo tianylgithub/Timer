@@ -1,5 +1,4 @@
 package com.example.tyl.timer.fragment;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -18,12 +17,8 @@ import com.example.tyl.timer.util.DaysAdapter;
 import com.example.tyl.timer.util.DefaultItemTouchHelpCallback;
 import com.example.tyl.timer.util.DefaultItemTouchHelper;
 import com.example.tyl.timer.util.MyDatabaseHelper;
-
 import java.util.Collections;
 import java.util.List;
-
-
-
 
 /**1、碎片中加载daylist并呈现信息                 y
  *
