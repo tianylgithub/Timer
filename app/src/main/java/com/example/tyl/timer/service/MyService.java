@@ -433,14 +433,14 @@ public class MyService extends Service {
 //           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             MyService.this.startActivity(intent);
 
-            Log.d("Myservice", "showActivity执行selsect");
+//            Log.d("Myservice", "showActivity执行selsect");
 
         } else if (sInformationHintList.size() != 0) {
             Intent intent = new Intent(MyService.this, ShowInformationHintActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             MyService.this.startActivity(intent);
-            Log.d("Myservice", "showActivity执行hint");
+//            Log.d("Myservice", "showActivity执行hint");
         }
     }
 

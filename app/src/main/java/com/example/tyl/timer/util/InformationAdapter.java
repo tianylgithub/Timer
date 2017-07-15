@@ -226,7 +226,7 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
 
                                 }
                             });
-                            dialog.setNegativeButton("返回", new DialogInterface.OnClickListener() {
+                            dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                         }
@@ -266,7 +266,7 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
                             }
                         });
 
-                        dialog.setNegativeButton("返回", new DialogInterface.OnClickListener() {
+                        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 

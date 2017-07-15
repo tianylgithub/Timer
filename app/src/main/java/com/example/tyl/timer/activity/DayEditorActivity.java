@@ -151,7 +151,7 @@ public class DayEditorActivity extends AppCompatActivity {
                 DayEditorActivity.this.finish();
             }
         });
-        dialog.setNegativeButton("返回", new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                     return;

@@ -102,7 +102,7 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.ViewHolder
                     }
                 });
 
-                dialog.setNegativeButton("点错..", new DialogInterface.OnClickListener() {
+                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         return;
@@ -123,7 +123,7 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.ViewHolder
                 dialog.setTitle("注意:");
                 dialog.setMessage("我没有完成事务?");
                 dialog.setCancelable(false);
-                dialog.setPositiveButton("是的..", new DialogInterface.OnClickListener() {
+                dialog.setPositiveButton("是的", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -157,7 +157,7 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.ViewHolder
                             }
                     }
                 });
-                dialog.setNegativeButton("点错!", new DialogInterface.OnClickListener() {
+                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         return;
