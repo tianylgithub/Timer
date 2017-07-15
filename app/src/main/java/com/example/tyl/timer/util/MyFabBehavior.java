@@ -66,7 +66,6 @@ public class MyFabBehavior extends CoordinatorLayout.Behavior<View> {
                 view.setVisibility(View.GONE);
                 isAnimate = false;
             }
-
             @Override
             public void onAnimationCancel(Animator animator) {
                 show(view);
@@ -74,7 +73,6 @@ public class MyFabBehavior extends CoordinatorLayout.Behavior<View> {
 
             @Override
             public void onAnimationRepeat(Animator animator) {
-
             }
         });
         animator.start();

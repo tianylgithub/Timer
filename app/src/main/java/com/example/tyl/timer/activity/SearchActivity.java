@@ -11,22 +11,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.tyl.timer.R;
-import com.example.tyl.timer.fragment.EditorFragment;
-import com.example.tyl.timer.util.Day;
+import com.example.tyl.timer.util.MyDatabaseHelper;
+import com.example.tyl.timer.util.TimeUtil;
 
-import java.util.List;
-
-public class Search extends AppCompatActivity {
-
-
-
+public class SearchActivity extends AppCompatActivity {
     class mTextWatcher1 implements TextWatcher {
-
         EditText mEditText;
-
         mTextWatcher1(EditText e) {
             mEditText = e;
-        }
+        }                                       //此时需要让你年份成为四位数
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -44,29 +37,26 @@ public class Search extends AppCompatActivity {
                 int num = Integer.valueOf(s.toString());
                 int len = s.toString().length();
                 if (len == 1 && num == 0) {
-                    Toast.makeText(Search.this, "年月日需要以0开头吗?！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, "年月日需要以0开头吗?！", Toast.LENGTH_SHORT).show();
                     s.clear();
                 }
-
                 switch (mEditText.getId()) {
 
                     case R.id.month_search:
                         if (num>=13) {
-                            Toast.makeText(Search.this, "月份请从1-12中选一", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SearchActivity.this, "月份请从1-12中选一", Toast.LENGTH_SHORT).show();
                             s.clear();
                         }
                         break;
                     case R.id.day_search:
                         if (num>32) {
-                            Toast.makeText(Search.this, "天数请从1-31中选一", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SearchActivity.this, "天数请从1-31中选一", Toast.LENGTH_SHORT).show();
                             s.clear();
                         }
                         break;
                     default:
                         break;
-
                 }
-
             }
         }
     }
@@ -74,12 +64,12 @@ public class Search extends AppCompatActivity {
     EditText year_search;
     EditText month_search;
     EditText day_search;
+    EditText information_search;
     Button search_button;
 
     @Override
     public void onBackPressed() {
         finish();
-
     }
 
     @Override
@@ -87,72 +77,43 @@ public class Search extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         year_search = (EditText) findViewById(R.id.year_search);
+        year_search.setText(TimeUtil.getYear()+"");
         year_search.addTextChangedListener(new mTextWatcher1(year_search));
         month_search = (EditText) findViewById(R.id.month_search);
+        month_search.setText(TimeUtil.getMonth()+"");
         month_search.addTextChangedListener(new mTextWatcher1(month_search));
         day_search = (EditText) findViewById(R.id.day_search);
         day_search.addTextChangedListener(new mTextWatcher1(day_search));
+        information_search = (EditText) findViewById(R.id.information_search);
         search_button = (Button) findViewById(R.id.search_button);
+
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String year = year_search.getText().toString();
-                int intYear = (year.equals("") ?  0 : Integer.valueOf(year));
+                year = (year.equals("") ?  null : year);
                 String month = month_search.getText().toString();
-                int intMonth = (month.equals("") ? 0 : Integer.valueOf(month));
+                month = (month.equals("") ?  null : month);
                 String day = day_search.getText().toString();
-                int  intDay=(day.equals("") ? 0 : Integer.valueOf(day));
-                if(intYear*intMonth*intDay==0){
-                    Toast.makeText(Search.this, "你确定你输入的是完整日期?", Toast.LENGTH_SHORT).show();
-                    return;
-                }else{
-                    int position = getPosition(intYear, intMonth, intDay);
-                    if (position != -1) {
-                        int state = EditorFragment.getmDays().get(position).getStatus();
-                        Intent intent1 = new Intent(Search.this, ShowInformationActivity.class);
-                        intent1.putExtra("year", intYear);
-                        intent1.putExtra("month", intMonth);
-                        intent1.putExtra("day", intDay);
-                        intent1.putExtra("state", state);
-                        intent1.putExtra("position", position);
-                        Search.this.startActivity(intent1);
-                        Search.this.finish();
-                    }else {
-                        Toast.makeText(Search.this,"你要查看的日期并不存在",Toast.LENGTH_SHORT).show();
-                        Search.this.finish();
-                    }
+                day = (day.equals("") ?  null: day);
+                String information = information_search.getText().toString();
+                information = (information.equals("") ? null : information);
 
+                if (MyDatabaseHelper.have_search_haveData(year, month, day, information)) {
+                    Intent intent = new Intent(SearchActivity.this, ShowSearchActivity.class);
+                    intent.putExtra("year", year);
+                    intent.putExtra("month", month);
+                    intent.putExtra("day", day);
+                    intent.putExtra("information", information);
+                    SearchActivity.this.startActivity(intent);
+                    SearchActivity.this.finish();
+                }else {                                                                                        //不存在要找内容
+                    Toast.makeText(SearchActivity.this, "不存在要找的内容", Toast.LENGTH_SHORT).show();
 
                 }
+
             }
         });
 
     }
-
-
-    int getPosition(int year, int month, int day) {
-        List<Day> dayList= EditorFragment.getmDays();
-        if (dayList != null) {
-            for(int position=0; position<dayList.size();position++){
-                Day day2 = dayList.get(position);
-                if ((day2.getDay() == day) && (day2.getMonth() ==month) && (day2.getYear() == year)) {
-                    return position;
-                }
-            }
-            return -1;
-        }
-        return -1;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
 }

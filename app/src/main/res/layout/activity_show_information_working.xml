@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+<android.support.design.widget.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/infoHint"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#FF6600"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    </android.support.v7.widget.Toolbar>
+</android.support.design.widget.AppBarLayout>
+    <!--<LinearLayout-->
+        <!--android:id="@+id/inforhintshow"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_height="?attr/actionBarSize"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+        <!--android:layout_width="match_parent">-->
+        <!--<TextView-->
+            <!--android:id="@+id/infohint_text"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="7"-->
+            <!--android:text=" 正在进行的事务"-->
+            <!--android:textSize="20sp"-->
+            <!--android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+            <!--/>-->
+        <!--<Button-->
+            <!--android:id="@+id/infohint_backapp"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:scaleType="centerInside"-->
+            <!--android:layout_margin="5dp"-->
+            <!--android:background="@drawable/infohintbacktoapp"-->
+            <!--/>-->
+    <!--</LinearLayout>-->
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/infoHintRecyclerView"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    </android.support.v7.widget.RecyclerView>
+    <!--<Button-->
+            <!--android:id="@+id/infoHintClose"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="关闭">-->
+        <!--</Button>-->
+        <!--<Button-->
+            <!--android:id="@+id/infoHintToApp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:text="回到应用">-->
+        <!--</Button>-->
+
+</android.support.design.widget.CoordinatorLayout>

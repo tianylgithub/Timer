@@ -8,7 +8,25 @@ import java.util.Comparator;
 
 public class DayCompare implements Comparator<Day> {
     @Override
-    public int compare(Day o2, Day o1) {
-        return  700*(o1.getYear() - o2.getYear()) + 35*(o1.getMonth() - o2.getMonth()) + (o1.getDay() - o2.getDay());    //排序规则
+    public int compare(Day o1, Day o2) {
+
+        switch (o1.getStatus()) {
+            case -1:                                                            //o1是空条目
+                switch (o2.getStatus()) {
+                    case -1:                                                    //o2是空条目
+                        return 0;
+                    default:                                                    //o2不是空条目,此时o1在o2之前
+                        return -1;
+                }
+            default:                                                        //o1不是空条目
+                switch (o2.getStatus()) {
+                    case -1:                                                //o2是空条目
+                        return 1;
+                    default:                                                //o2.不是空条目
+                        return 700 * (o2.getYear() - o1.getYear()) + 35 * (o2.getMonth() - o1.getMonth()) + (o2.getDay() - o1.getDay());
+
+                }
+        }
+
     }
 }

@@ -12,30 +12,37 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_scrollFlags="scroll|enterAlways|snap"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         />
 </android.support.design.widget.AppBarLayout>
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
         <!--在此处说明APP的具体功能-->
         <TextView
             android:id="@+id/app_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"/>
-
-        <!--在此开始展示图标的意义-->
+            android:padding="10dp"
+            />
+            <TextView
+                android:id="@+id/app_tips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                    />
+            <!--在此开始展示图标的意义-->
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="?android:listPreferredItemHeight"
+            android:gravity="center_vertical"
             android:text="图标说明"/>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,8 +59,10 @@
             <TextView
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_margin="5dp"
                 android:layout_weight="7"
-                android:text="过去的日子,不可以滑动删除,可以点击查看任务,不能编辑任务"/>
+                android:gravity="center_vertical"
+                android:text="过去的日子,不可以滑动删除,可以点击查看事务,不能编辑事务"/>
         </LinearLayout>
 
 
@@ -72,8 +81,10 @@
             <TextView
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_margin="5dp"
                 android:layout_weight="7"
-                android:text="今天,不可以滑动删除,可以点击查看和编辑任务"/>
+                android:gravity="center_vertical"
+                android:text="今天,不可以滑动删除,可以点击查看和编辑事务"/>
         </LinearLayout>
 
 
@@ -92,9 +103,13 @@
             <TextView
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_margin="5dp"
                 android:layout_weight="7"
-                android:text="未来的日子,可以点击查看和编辑任务,如果没有任务则可滑动删除"/>
+                android:gravity="center_vertical"
+                android:text="未来的日子,可以点击查看和编辑事务,如果没有事务则可滑动删除"/>
         </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="?android:listPreferredItemHeight"
@@ -110,9 +125,12 @@
             <TextView
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_margin="5dp"
                 android:layout_weight="7"
-                android:text="新创的条目,可以点击编辑日期,可以滑动删除"/>
+                android:gravity="center_vertical"
+                android:text="新创或撤销后的条目,可以点击编辑日期,可以滑动删除"/>
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -129,9 +147,13 @@
             <TextView
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_margin="5dp"
                 android:layout_weight="7"
+                android:gravity="center_vertical"
                 android:text="点击添加条目"/>
         </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="?android:listPreferredItemHeight"
@@ -147,9 +169,11 @@
             <TextView
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_margin="5dp"
                 android:layout_weight="7"
-                android:background="#00688B"
-                android:text="完成的任务,不可以滑动删除,不可以撤销"/>
+                android:background="#669933"
+                android:gravity="center_vertical"
+                android:text="完成的事务,不可以滑动删除,不可以撤销"/>
         </LinearLayout>
 
         <LinearLayout
@@ -167,10 +191,14 @@
             <TextView
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_margin="5dp"
                 android:layout_weight="7"
-                android:background="#00688B"
-                android:text="没有完成的任务,不可以滑动删除,不可以撤销"/>
+                android:background="#FF9966"
+                android:gravity="center_vertical"
+                android:text="没有完成的事务,不可以滑动删除,不可以撤销"/>
         </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="?android:listPreferredItemHeight"
@@ -186,10 +214,14 @@
             <TextView
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_margin="5dp"
                 android:layout_weight="7"
-                android:background="#FFFF00"
-                android:text="任务结束还未确认的,需要点击条目确认,不可以滑动删除,不可以撤销任务"/>
+                android:background="#FFCC33"
+                android:gravity="center_vertical"
+                android:text="事务结束还未确认的,需要点击条目确认,不可以滑动删除,不可以撤销"/>
         </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="?android:listPreferredItemHeight"
@@ -205,29 +237,13 @@
             <TextView
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_margin="5dp"
                 android:layout_weight="7"
-                android:background="#00C5CD"
-                android:text="正在进行的任务,不可以点击撤销,不可以滑动删除"/>
+                android:background="#669999"
+                android:gravity="center_vertical"
+                android:text="正在进行的事务,不可以点击撤销,不可以滑动删除"/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="?android:listPreferredItemHeight"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:scaleType="centerInside"
-                android:padding="5dp"
-                android:src="@drawable/inforture"
-                />
-            <TextView
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="7"
-                android:text="已经安排的任务,可以点击撤销安排,不可以滑动删除"
-                android:background="#00EEEE"/>
-        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="?android:listPreferredItemHeight"
@@ -243,10 +259,36 @@
             <TextView
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_margin="5dp"
                 android:layout_weight="7"
-                android:background="#00688B"
-                android:text="新创的条目,点击条目编辑任务,可以滑动删除"/>
+                android:gravity="center_vertical"
+                android:text="已经安排的事务,可以点击撤销,不可以滑动删除"
+                android:background="#009999"/>
         </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?android:listPreferredItemHeight"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
+                android:padding="5dp"
+                android:src="@drawable/inforture"
+                />
+            <TextView
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_margin="5dp"
+                android:layout_weight="7"
+                android:gravity="center_vertical"
+                android:background="#99CC99"
+                android:text="新创或撤销后的条目,点击条目编辑事务,可以滑动删除"/>
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -263,9 +305,35 @@
             <TextView
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_margin="5dp"
                 android:layout_weight="7"
+                android:gravity="center_vertical"
                 android:text="点击添加条目"/>
         </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?android:listPreferredItemHeight"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    android:padding="5dp"
+                    android:src="@drawable/infohintbacktoapp"
+                    />
+                <TextView
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:text="点击返回应用"/>
+            </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="?android:listPreferredItemHeight"
@@ -281,18 +349,54 @@
             <TextView
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_margin="5dp"
                 android:layout_weight="7"
-                android:text="提示有需要确认任务的通知,需要尽快点击确认,出现3次后自动更新任务为失败"/>
+                android:gravity="center_vertical"
+                android:text="提示有需要确认事务的通知,点击通知进入确认界面,确认后才能正常操作APP"/>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/app_closeButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="关闭"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?android:listPreferredItemHeight"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    android:padding="5dp"
+                    android:src="@drawable/infornomal"
+                    />
+                <TextView
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:text="程序服务运行通知,点击通知进入APP"/>
+            </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?android:listPreferredItemHeight"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    android:padding="5dp"
+                    android:src="@drawable/infoworkinghint"
+                    />
+                <TextView
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:text="提示有事务正在进行的通知,点击通知可查看正在运行的具体事务"/>
+            </LinearLayout>
+</LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
-
 </android.support.design.widget.CoordinatorLayout>

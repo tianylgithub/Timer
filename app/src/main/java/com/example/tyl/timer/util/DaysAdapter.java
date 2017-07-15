@@ -1,8 +1,6 @@
 package com.example.tyl.timer.util;
 
-import android.app.Application;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,11 +11,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.tyl.timer.R;
+import com.example.tyl.timer.activity.DayEditorActivity;
 import com.example.tyl.timer.activity.MainActivity;
 import com.example.tyl.timer.activity.ShowInformationActivity;
-import com.example.tyl.timer.activity.dayHint;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -28,13 +24,6 @@ import java.util.List;
 public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
 
 
-
-//    int mCurrentYear = TimeUtil.getYear();
-//    int mCurrentMonth = TimeUtil.getMonth();
-//    int mCurrentDay = TimeUtil.getDay();
-
-
-//    int   dayState;
 
     static final int NOTHING= -1;
     static final  int   PAST = 0;
@@ -47,11 +36,10 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView date;
-//        View show_information;
         TextView show_all;
         TextView show_haveDone;
         TextView show_haveLosed;
-        TextView show_theRest;
+        TextView show_theRest_or_finish_percent;
         ProgressBar mProgressBar;
         View dayView;
         ImageView status;
@@ -59,12 +47,11 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
         public ViewHolder(View view) {
             super(view);
             dayView = view;
-//            show_information =  view.findViewById(R.id.show_information);
             date = (TextView) view.findViewById(R.id.date);
             show_all = (TextView) view.findViewById(R.id.show_all);
             show_haveDone = (TextView) view.findViewById(R.id.show_havedone);
             show_haveLosed = (TextView) view.findViewById(R.id.show_havelosed);
-            show_theRest = (TextView) view.findViewById(R.id.show_therest);
+            show_theRest_or_finish_percent = (TextView) view.findViewById(R.id.show_therest_or_finish_percent);
             mProgressBar = (ProgressBar) view.findViewById(R.id.progressbar);
             status = (ImageView) view.findViewById(R.id.status);
         }
@@ -79,7 +66,7 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_day_recycler, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_day, parent, false);
         final ViewHolder holder = new ViewHolder(view);
 
         holder.dayView.setOnClickListener(new   View.OnClickListener(){
@@ -89,10 +76,11 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
                 int position = holder.getAdapterPosition();
                 Day day = mDayList.get(position);
                 switch (day.getStatus()){
-                    case 0:                                    //状态是 已完成、进行时、未来时打开信息界面
-                    case 1:
-                    case 2:
+                    case PAST:                                    //状态是 已完成、进行时、未来时打开信息界面
+                    case NOW:
+                    case FUTURE:
                 Intent intent = new Intent(mMainActivity, ShowInformationActivity.class);
+                        intent.putExtra("dayID", day.getId());
                 intent.putExtra("year", day.getYear());
                 intent.putExtra("month", day.getMonth());
                 intent.putExtra("day", day.getDay());
@@ -100,78 +88,57 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
                         intent.putExtra("position", position);
                 mMainActivity.startActivity(intent);
                         break;
-                    case  -1:                                   //状态是空白是打开是编辑day的界面
-                        Intent i = new Intent(mMainActivity, dayHint.class);
+                    case  NOTHING:                                   //状态是空白是打开是编辑day的界面
+                        Intent i = new Intent(mMainActivity, DayEditorActivity.class);
                         i.putExtra("position", position);
                         mMainActivity.startActivityForResult(i,666);
                         break;
-
-
-//                        switch (day.getAll()){
-//                            case 0:                         //因新的一天到来刚刚创立还未有information内容
-//                                Intent i1 = new Intent(mMainActivity, dayHint.class);
-//                                i1.putExtra("position", position);
-//                                mMainActivity.startActivityForResult(i1,1);
-//                                break;
-//                            default:
-//                                Intent dintent= new Intent(mMainActivity, ShowInformationActivity.class);
-//                                dintent.putExtra("year", day.getYear());
-//                                dintent.putExtra("month", day.getMonth());
-//                                dintent.putExtra("day", day.getDay());
-//                                dintent.putExtra("state", dayState);
-//                                mMainActivity.startActivity(dintent);
-//                                break;
-//                        }
-
                 }
             }
         });
-
         return holder;
     }
-
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
         Day day = mDayList.get(position);
        holder.date.setText(day.getYear()+"-"+day.getMonth()+"-"+day.getDay());
-        holder.show_all.setText("计划:"+day.getAll());
-        holder.show_theRest.setText("待办:" + day.getTheRest());
-        holder.show_haveDone.setText("完成:" + day.getDone());
-        holder.show_haveLosed.setText("失败:" + day.getLosed());
-        holder.mProgressBar.setMax(day.getAll());
-        holder.mProgressBar.setProgress(day.getDone());
-
+        int finish = day.getDone();
+        int all = day.getAll();
+        int theRest = day.getTheRest();
+        int losed = day.getLosed();
+        holder.show_all.setText("计划:"+all);
+        holder.show_haveDone.setText("完成:" + finish);
+        holder.show_haveLosed.setText("失败:" + losed);
 
         switch (day.getStatus()) {
             case PAST:
                 holder.status.setImageResource(R.drawable.daypast);   //过去的
-//                holder.show_information.setBackgroundColor(Color.parseColor("#CC99090"));    //灰色
+                switch (all) {
+                    case 0:
+                        holder.show_theRest_or_finish_percent.setText("完成率:0%");
+                        break;
+                    default:
+                        holder.show_theRest_or_finish_percent.setText("完成率:" + finish*10000 / all/10000.00*100+"%");
+                        break;
+                }
                 break;
             case NOW:
                 holder.status.setImageResource(R.drawable.daynow); //现在的
-//                holder.show_information.setBackgroundColor(Color.parseColor("#33CCFF"));        //蓝色
+                holder.show_theRest_or_finish_percent.setText("待办:" + theRest);
                 break;
             case FUTURE:
                 holder.status.setImageResource(R.drawable.dayfuturehaveinfo);//未来的有info
-//                holder.show_information.setBackgroundColor(Color.parseColor("#FF99FF"));   //  紫红色
+                holder.show_theRest_or_finish_percent.setText("待办:" + theRest);
                 break;
             case NOTHING:
                 holder.status.setImageResource(R.drawable.dayfuturenoinfo);//未来的没有info
-//                holder.show_information.setBackgroundColor(Color.parseColor("#FFFF00"));   //黄色
+                holder.show_theRest_or_finish_percent.setText("待办:" + theRest);
                 break;
         }
 
-//        if (150*(day.getYear() - mCurrentYear) +70*( day.getMonth() - mCurrentMonth)+( day.getDay()-mCurrentDay)<0) {
-//            holder.status.setImageResource(R.drawable.axes);        //过去的，不可编辑的
-//            dayState = PAST;
-//        } else if(150*(day.getYear() - mCurrentYear) +70*( day.getMonth() - mCurrentMonth)+( day.getDay()-mCurrentDay)>0){
-//            holder.status.setImageResource(R.drawable.feathers);    //未来的，可以编辑的
-//            dayState = FUTURE;
-//        }   else {
-//            holder.status.setImageResource(R.drawable.canoe);       //现在的，部分编辑的
-//            dayState = NOW;
-//        }
+        holder.mProgressBar.setMax(all);
+        holder.mProgressBar.setProgress(finish);
+
     }
 
     @Override

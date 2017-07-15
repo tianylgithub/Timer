@@ -5,16 +5,23 @@ package com.example.tyl.timer.util;
  */
 
 public class Day {
+    private int id=-1;
     private int mAll;
     private int mDone;
     private int mLosed;
     private int mTheRest;
     private int year;
-  private   int month;
-    private    int day;
-    private  int status= -1;              // PAST=0; NOW=1,FUTURE=2
+    private int month;
+    private int day;
+    private int status= -1;              // PAST=0; NOW=1,FUTURE=2
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getAll() {
         return mAll;
@@ -96,7 +103,6 @@ public class Day {
         mTheRest = mTheRest - 1;
     }
 
-
     public void plusLosed() {
         mLosed = mLosed + 1;
     }
@@ -104,9 +110,4 @@ public class Day {
     public void plusDone() {
         mDone = mDone + 1;
     }
-
-
-
-
-
 }

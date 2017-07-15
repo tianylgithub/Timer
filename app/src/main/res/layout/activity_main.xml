@@ -54,6 +54,7 @@
             android:layout_gravity="bottom|end"
             android:scaleType="fitXY"
             app:layout_behavior="com.example.tyl.timer.util.MyFabBehavior"
+            app:backgroundTint="#999999"
             />
     </android.support.design.widget.CoordinatorLayout>
 <!--选择界面，可以切换成图像、笔记、天气选择-->

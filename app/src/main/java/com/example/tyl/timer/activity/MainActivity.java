@@ -1,7 +1,6 @@
 package com.example.tyl.timer.activity;
 //fragment版本库的问题,是supportv4，还是默认
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -19,10 +19,13 @@ import com.example.tyl.timer.R;
 import com.example.tyl.timer.fragment.EditorFragment;
 import com.example.tyl.timer.service.MyService;
 import com.example.tyl.timer.util.Day;
+import com.example.tyl.timer.util.DayCompare;
 import com.example.tyl.timer.util.MyDatabaseHelper;
-import com.example.tyl.timer.util.TimeUtil;
 
+import java.util.Collections;
 import java.util.List;
+
+import static com.example.tyl.timer.util.MyDatabaseHelper.sMyDatabaseHelper;
 
 
 /**
@@ -36,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton mFloatingActionButton;
     DrawerLayout mDrawerLayout;
     Toolbar mToolbar;
-
+   static int state=0;
     public FloatingActionButton getFloatingActionButton() {
         return mFloatingActionButton;
     }
@@ -44,32 +47,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MyDatabaseHelper.sMyDatabaseHelper.initial();
 
+       sMyDatabaseHelper.initialDate();
+       MyDatabaseHelper.sMyDatabaseHelper.initialInfo();
         setContentView(R.layout.activity_main);
-
-        final Intent intent = new Intent(this, MyService.class);
+        Intent intent = new Intent(this, MyService.class);
         startService(intent);
+
+        state = state+1;
 
   mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(mToolbar);
-
-
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("时间表");
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.day_floatbutton);
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.navi_view);
         navigationView.setItemIconTintList(null);
         navigationView.setCheckedItem(R.id.nav_today);      // 快速进入今天
-        navigationView.setCheckedItem(R.id.nav_search);       //查找某一天并进入
-        navigationView.setCheckedItem(R.id.nav_showlife);   //大尺度展示完成图谱
-        navigationView.setCheckedItem(R.id.nav_listener);  //正在监听的情况
-        navigationView.setCheckedItem(R.id.nav_tips);    //说明
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
 
@@ -77,68 +76,61 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_today:
-                        int year = TimeUtil.getYear();
-                        int month = TimeUtil.getMonth();
-                        int day = TimeUtil.getDay();
-                        int position = getPosition(year, month, day);
-                        if (position != -1) {
-                            Intent intent1 = new Intent(MainActivity.this, ShowInformationActivity.class);
-                            intent1.putExtra("year", year);
-                            intent1.putExtra("month", month);
-                            intent1.putExtra("day", day);
-                            intent1.putExtra("month", month);
-                            intent1.putExtra("state", 1);
-                            intent1.putExtra("position", position);
-                            MainActivity.this.startActivity(intent1);
 
-                        }else {
-                            Toast.makeText(MainActivity.this,"查找的日期还未规划",Toast.LENGTH_SHORT).show();
+                        Day day = getToday();
+                        if (day != null) {
+                            Intent intent1 = new Intent(MainActivity.this, ShowInformationActivity.class);
+                            intent1.putExtra("year", day.getYear());
+                            intent1.putExtra("month", day.getMonth());
+                            intent1.putExtra("day", day.getDay());
+                            intent1.putExtra("dayID",day.getId() );
+                            intent1.putExtra("state", 1);
+                            MainActivity.this.startActivity(intent1);
                         }
                         break;
-
                     case R.id.nav_search:
-                        Intent intent2 = new Intent(MainActivity.this, Search.class);
+                        Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
                         MainActivity.this.startActivity(intent2);
                         break;
-
                     case R.id.nav_showlife:
-                        Toast.makeText(MainActivity.this,"图谱功能正在筹备中，敬请期待!",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_listener:
-                        Toast.makeText(MainActivity.this,"监听功能正在筹备中，敬请期待!",Toast.LENGTH_SHORT).show();
+                        Intent intent3 = new Intent(MainActivity.this, ShowPictureActivity.class);
+                        MainActivity.this.startActivity(intent3);
+
                         break;
                     case R.id.nav_tips:
-                        Intent intent3 = new Intent(MainActivity.this, appExplain.class);
-                        startActivity(intent3);
-                        Toast.makeText(MainActivity.this,"欢迎使用本应用!",Toast.LENGTH_SHORT).show();
+                        Intent intent4 = new Intent(MainActivity.this, AppExplainActivity.class);
+                        MainActivity.this.startActivity(intent4);
                         break;
                 }
                 return true;
             }
         });
-
     }
 
-    //    替换碎片的方法
-//    private void replaceFrament(Fragment fragment) {
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction transaction = fragmentManager.beginTransaction();
-//        transaction.replace(R.id.main_fragment,fragment );
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("MainActivity", "onResume执行");
+        Intent intent = new Intent(this, MyService.class);
+        intent.putExtra("stateID", -99);
+        startService(intent);
+        if(state!=0&&MyService.sSelectActivitiesList.size() != 0) {
+            Intent intent1 = new Intent(this, ShowInformationSelectActivity.class);
+            startActivity(intent1);
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
-
                 break;
             default:
                 break;
         }
         return true;
     }
-
     /**
      *
      *
@@ -156,34 +148,53 @@ public class MainActivity extends AppCompatActivity {
                 int day = data.getIntExtra("day", -1);
                 int position = data.getIntExtra("position", -1);
                 Day date = EditorFragment.getmDays().get(position);
+
                 date.setYear(year);
                 date.setMonth(month);
                 date.setDay(day);
                     date.setStatus(2);
-                    MyDatabaseHelper.addDay(date);
+                    int dayID = MyDatabaseHelper.addDay(date);    //将新建的一天插入数据库并返回该天的ID
+                    date.setId(dayID);
+                    Collections.sort(EditorFragment.getmDays(), new DayCompare());
+                    EditorFragment.getDaysAdapter().notifyDataSetChanged();
+                    EditorFragment.getRecyclerView().smoothScrollToPosition(position);}
+                Toast.makeText(this, "新的日期创建成功,请点击添加任务", Toast.LENGTH_SHORT).show();
 
-                EditorFragment.getDaysAdapter().notifyDataSetChanged();}
+
                 break;
             default:
                 break;
         }
     }
 
-    int getPosition(int year, int month, int day) {
-      List<Day>    dayList=EditorFragment.getmDays();
+    Day getToday() {
+        List<Day> dayList = EditorFragment.getmDays();
         if (dayList != null) {
-            for(int position=0; position<dayList.size();position++){
-                Day day2 = dayList.get(position);
-                if ((day2.getDay() == day) && (day2.getMonth() ==month) && (day2.getYear() == year)) {
-                    return position;
+            for (Day day : dayList) {
+                if (day.getStatus() == 1) {
+                    return day;
                 }
             }
-            return -1;
+
         }
-        return -1;
+        return null;
     }
+
+
+    @Override
+    protected void onPause() {
+        Log.d("MainActivity", "onPause执行！");
+        super.onPause();
+    }
+
     @Override
     protected void onDestroy() {
+        Log.d("MainActivity", "onDestory执行！");
         super.onDestroy();
     }
+
+
+
+
+
 }

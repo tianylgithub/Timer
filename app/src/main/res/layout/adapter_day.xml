@@ -6,7 +6,7 @@
               android:id="@+id/item_fragment_recycler1"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="?attr/actionBarSize"
+              android:layout_height="?android:listPreferredItemHeight"
     android:layout_margin="5dp">
 <!--显示fragment里的item选项-->
 
@@ -18,42 +18,48 @@
         android:layout_width="0dp"
         android:layout_weight="7"
         >
+
         <LinearLayout
             android:id="@+id/show_things"
             android:orientation="horizontal"
             android:layout_height="0dp"
             android:layout_weight="5"
             android:layout_width="match_parent">
+
             <TextView
                 android:id="@+id/date"
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
-                android:gravity="center"
-                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:layout_weight="3"
                 />
+
             <TextView
                 android:id="@+id/show_all"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
                 android:layout_height="match_parent"/>
+
             <TextView
                 android:id="@+id/show_havedone"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
                 android:layout_height="match_parent"/>
+
             <TextView
                 android:id="@+id/show_havelosed"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
                 android:layout_height="match_parent"/>
+
             <TextView
-                android:id="@+id/show_therest"
+                android:id="@+id/show_therest_or_finish_percent"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
                 android:layout_height="match_parent"/>
 
         </LinearLayout>

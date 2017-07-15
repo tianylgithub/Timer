@@ -1,15 +1,7 @@
 package com.example.tyl.timer.util;
 
-import android.content.DialogInterface;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.widget.LinearLayout;
-
-import com.example.tyl.timer.R;
-
-import static android.R.attr.orientation;
 
 /**
  * Created by TYL on 2017/6/19.
@@ -43,16 +35,12 @@ public class DefaultItemTouchHelpCallback extends ItemTouchHelper.Callback {
         this.mOnItemTouchCallbackListener = onItemTouchCallbackListener;
     }
 
-
-
     /**
      * 设置是否可以被拖拽
      * @param CanDrag   是true，否false
      */
 
-//    public void setDragEnable(boolean CanDrag) {
-//        isCanDrag = CanDrag;
-//    }
+
 
     /**
      * 设置是否可以被滑动

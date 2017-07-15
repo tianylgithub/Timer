@@ -6,12 +6,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.example.tyl.timer.R;
 import com.example.tyl.timer.activity.MainActivity;
 import com.example.tyl.timer.util.Day;
@@ -42,17 +40,13 @@ import java.util.List;
  */
 //以天为单位展示任务的完成情况，点击可以 进入当天的编辑
 public class EditorFragment extends Fragment {
-
-
-
     static final int NOTHING= -1;
     static final  int   PAST = 0;
     static final   int NOW = 1;
     static final   int FUTURE=2;
 
-
     private static List<Day>   mDays;
-        RecyclerView mRecyclerView;
+      static   RecyclerView mRecyclerView;
    static FloatingActionButton mFloatingActionButton;
 
    static DaysAdapter daysAdapter;
@@ -67,9 +61,10 @@ public class EditorFragment extends Fragment {
         return mDays;
     }
 
-//    public static void setmDays(List<Day> mDays) {
-//        EditorFragment.mDays = mDays;
-//    }
+    public static RecyclerView getRecyclerView() {
+        return mRecyclerView;
+    }
+
 
     /**
      * 滑动 对不同状态下的Day效果不同
@@ -93,8 +88,7 @@ public class EditorFragment extends Fragment {
                         daysAdapter.notifyDataSetChanged();
                         break;
                     case FUTURE:                                                             //还未发生的  未来
-                        if (MyDatabaseHelper.sMyDatabaseHelper.getList(day.getYear(), day.getMonth(), day.getDay()).size()!=0) {
-
+                        if (MyDatabaseHelper.havaList(day)) {
                             Toast.makeText(getActivity(), "计划在轨，当先移取", Toast.LENGTH_SHORT).show();
                             daysAdapter.notifyDataSetChanged();
                         } else {
@@ -111,15 +105,12 @@ public class EditorFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_text, container, false);
+        View view = inflater.inflate(R.layout.fragment, container, false);
          mRecyclerView = (RecyclerView) view.findViewById(R.id.editor_recycler);
 
         //获取系统的今天日期
-//        TimeUtil time = new TimeUtil();
         //点进相关记录后进入当天的情况，可以预览当天的安排详情，如果是还未到来的时间则可以进入进行编辑
-
         //加载daylist信息
-        Log.d("fragment", "在下要加载了哦>.>");
         mDays=MyDatabaseHelper.sMyDatabaseHelper.getDays();
       Collections.sort(mDays, new DayCompare());
         mMainActivity = (MainActivity) getActivity();
@@ -137,15 +128,17 @@ public class EditorFragment extends Fragment {
         // floatingButton动态添加view
         MainActivity mainActivity = (MainActivity) getActivity();
         mFloatingActionButton = mainActivity.getFloatingActionButton();
+        mRecyclerView.smoothScrollToPosition(0);     //mark
+
         mFloatingActionButton.setOnClickListener(new   View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
-                Day day = new Day();
+                Day day = new Day();                            //创建一个空条目
                 mDays.add(0,day);
                 daysAdapter.notifyItemInserted(0);
-//                daysAdapter.notifyDataSetChanged()
+                mRecyclerView.smoothScrollToPosition(0);                        //mark
                 Toast.makeText(getActivity(), "创建成功,请点击编辑", Toast.LENGTH_SHORT).show();
+
             }
         });
 

@@ -13,10 +13,6 @@
             android:id="@+id/nav_showlife"
             android:icon="@drawable/navimenu3"
             android:title="图谱"/>
-        <item
-            android:id="@+id/nav_listener"
-            android:icon="@drawable/navimenu4"
-            android:title="监听器"/>
 
         <item
             android:id="@+id/nav_tips"

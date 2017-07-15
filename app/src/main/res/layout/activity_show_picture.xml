@@ -1,0 +1,297 @@
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/picture_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            />
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--在此处说明APP的具体功能-->
+
+            <TextView
+                android:id="@+id/show_picture_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="本月天数统计:"/>
+                <ProgressBar
+                    android:id="@+id/month_day_probar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:progressBackgroundTint="#CC3366"
+                    android:progressTint="#0099FF"
+                    android:layout_margin="2dp"
+                    />
+                <TextView
+                    android:id="@+id/month_day_text"
+                    android:layout_margin="2dp"
+                    android:background="#fffff0"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:listPreferredItemHeight"
+                    android:gravity="center_vertical"/>
+            </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="本月事务统计:"/>
+            <ProgressBar
+                android:id="@+id/month_work_probar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:progressBackgroundTint="#CC3366"
+                android:progressTint="#0099FF"
+                android:layout_margin="2dp"
+                style="?android:attr/progressBarStyleHorizontal"
+                />
+            <TextView
+                android:id="@+id/month_work_text"
+                android:layout_margin="2dp"
+                android:background="#fffff0"
+                android:layout_width="match_parent"
+                android:layout_height="?android:listPreferredItemHeight"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="今年天数统计:"/>
+            <ProgressBar
+                android:id="@+id/year_day_probar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:progressBackgroundTint="#CC3366"
+                android:progressTint="#0099FF"
+                style="?android:attr/progressBarStyleHorizontal"
+                />
+            <TextView
+                android:id="@+id/year_day_text"
+                android:layout_margin="2dp"
+                android:background="#fffff0"
+                android:layout_width="match_parent"
+                android:layout_height="?android:listPreferredItemHeight"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="今年事务统计:"/>
+            <ProgressBar
+                android:id="@+id/year_work_probar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:progressBackgroundTint="#CC3366"
+                android:progressTint="#0099FF"
+                style="?android:attr/progressBarStyleHorizontal"
+                />
+            <TextView
+                android:id="@+id/year_work_text"
+                android:layout_margin="2dp"
+                android:background="#fffff0"
+                android:layout_width="match_parent"
+                android:layout_height="?android:listPreferredItemHeight"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="使用至今天数相关统计:"/>
+            <ProgressBar
+                android:id="@+id/begin_day_probar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:progressBackgroundTint="#CC3366"
+                android:progressTint="#0099FF"
+                style="?android:attr/progressBarStyleHorizontal"
+                />
+            <TextView
+                android:id="@+id/begin_day_text"
+                android:layout_margin="2dp"
+                android:background="#fffff0"
+                android:layout_width="match_parent"
+                android:layout_height="?android:listPreferredItemHeight"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="使用至事务相关统计:"/>
+
+                <ProgressBar
+                    android:id="@+id/begin_work_probar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:progressBackgroundTint="#CC3366"
+                    android:progressTint="#0099FF"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    />
+                <TextView
+                    android:id="@+id/begin_work_text"
+                    android:layout_margin="2dp"
+                    android:background="#fffff0"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:listPreferredItemHeight"
+                    android:gravity="center_vertical"/>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="使用至今无记(没有事务记录)数统计:"/>
+
+                <ProgressBar
+                android:id="@+id/begin_day_probar1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:progressBackgroundTint="#CC3366"
+                android:progressTint="#0099FF"
+                style="?android:attr/progressBarStyleHorizontal"
+                />
+            <TextView
+                android:id="@+id/begin_day_text1"
+                android:layout_margin="2dp"
+                android:background="#fffff0"
+                android:layout_width="match_parent"
+                android:layout_height="?android:listPreferredItemHeight"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="生命相关统计:"/>
+
+            <ProgressBar
+                android:id="@+id/age_probar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:progressBackgroundTint="#CC3366"
+                android:progressTint="#0099FF"
+                style="?android:attr/progressBarStyleHorizontal"
+                />
+            <TextView
+                android:id="@+id/age_text"
+                android:layout_margin="2dp"
+                android:background="#fffff0"
+                android:layout_width="match_parent"
+                android:layout_height="?android:listPreferredItemHeight"
+                android:gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
