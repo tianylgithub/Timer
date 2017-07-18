@@ -2,7 +2,6 @@ package com.example.tyl.timer.util;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -138,12 +137,9 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
 
         holder.mProgressBar.setMax(all);
         holder.mProgressBar.setProgress(finish);
-
     }
-
     @Override
     public int getItemCount() {
-        Log.d("info_adapter", "不好意思你输了");
         return mDayList.size();
 
     }

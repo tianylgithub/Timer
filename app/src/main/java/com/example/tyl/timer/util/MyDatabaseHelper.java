@@ -373,6 +373,15 @@ Cursor  cursor=mSQLiteDatabase.query("TABLE_INFO", null, yearUtil+monthUtil+dayU
     }
 
 
+    public static void deletDay(Day dayUsed) {
+        int id = dayUsed.getId();
+        mSQLiteDatabase.delete("TABLE_DAY", "id=?", new String[]{id + ""});
+    }
+
+
+
+
+
 
 
 //    /**

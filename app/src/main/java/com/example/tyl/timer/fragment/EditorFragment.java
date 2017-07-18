@@ -87,7 +87,9 @@ public class EditorFragment extends Fragment {
                             Toast.makeText(getActivity(), "计划在轨，当先移取", Toast.LENGTH_SHORT).show();
                             daysAdapter.notifyDataSetChanged();
                         } else {
+                            MyDatabaseHelper.deletDay(day);
                             mDays.remove(adapterPosition);
+
                             daysAdapter.notifyItemRemoved(adapterPosition);
 //                            daysAdapter.notifyDataSetChanged();
                             Toast.makeText(getActivity(), "本来无一物，何处染尘埃", Toast.LENGTH_SHORT).show();

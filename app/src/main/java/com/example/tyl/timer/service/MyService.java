@@ -342,7 +342,7 @@ public class MyService extends Service {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(MyService.this);
             if (sSelectActivitiesList.size() != 0) {                                                      //当有需要确认的事务时
                 builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.applogo));
-                builder.setVibrate(new long[]{0, 1000, 1000, 1000});
+                builder.setVibrate(new long[]{0, 1000, 1000, 1000,1000,1000});
                 builder.setSmallIcon(R.drawable.infoselecthintforeground);
                 builder.setContentTitle("日期:" + year + "年" + month + "月" + day + "日" + "  待确认事务:" + num);
                 builder.setAutoCancel(false).setPriority(NotificationCompat.PRIORITY_MAX);
@@ -353,7 +353,7 @@ public class MyService extends Service {
                 builder.setContentIntent(pendingIntent);
             } else if (sInformationHintList.size() != 0) {                                              //当有事务正在进行时
                 builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.applogo));
-                builder.setVibrate(new long[]{0, 1000, 1000, 1000});
+                builder.setVibrate(new long[]{0, 1000, 1000, 1000,1000,1000});
                 builder.setSmallIcon(R.drawable.infoworkingforeground);
                 builder.setContentTitle("日期:" + year + "." + month + "." + day  + "  正在进行事务:" + num);
                 builder.setAutoCancel(false).setPriority(NotificationCompat.PRIORITY_MAX);

@@ -1,4 +1,5 @@
 package com.example.tyl.timer.activity;
+
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.tyl.timer.R;
@@ -68,7 +70,7 @@ public class ShowInformationSelectActivity extends AppCompatActivity {
         int Id = getIntent().getIntExtra("infoID", -1);
 //        Log.d("ShowInfoHint", Id + "");
         if (Id != -1) {                                                          //定时任务触发
-//            Log.d("ShowInformationSelect", "定时任务执行");
+            Log.d("ShowInformationSelect", "定时任务执行");
 
             Information information = MyService.sInformationMap.get(Id);
             MyService.sSelectActivitiesList.add(information);

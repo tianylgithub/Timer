@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -17,8 +18,8 @@ import com.example.tyl.timer.R;
 import com.example.tyl.timer.fragment.EditorFragment;
 import com.example.tyl.timer.service.MyService;
 import com.example.tyl.timer.util.Day;
-import com.example.tyl.timer.util.InformationWorkingAdapter;
 import com.example.tyl.timer.util.Information;
+import com.example.tyl.timer.util.InformationWorkingAdapter;
 import com.example.tyl.timer.util.MyDatabaseHelper;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class ShowInformationWorkingActivity extends AppCompatActivity {
         int Id =  getIntent().getIntExtra("infoID", -1);
 //        Log.d("ShowInfoHint", Id + "");
         if (Id!=-1) {                                                          //定时任务触发
-//            Log.d("ShowInformationHint", "infohint执行定时任务");
+            Log.d("ShowInformationHint", "infohint执行定时任务");
             Information information = MyService.sInformationMap.get(Id);
             MyService.sInformationHintList.add(information);
             int dayID = information.getDayID();

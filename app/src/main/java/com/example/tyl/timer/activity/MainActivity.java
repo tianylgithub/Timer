@@ -179,22 +179,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return null;
     }
-
-
-    @Override
-    protected void onPause() {
-        Log.d("MainActivity", "onPause执行！");
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        Log.d("MainActivity", "onDestory执行！");
-        super.onDestroy();
-    }
-
-
-
-
-
 }

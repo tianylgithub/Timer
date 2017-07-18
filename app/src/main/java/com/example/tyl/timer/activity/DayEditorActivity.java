@@ -74,7 +74,7 @@ public class DayEditorActivity extends AppCompatActivity {
                         }
                         break;
                     case R.id.day_editor:
-                        if (num>32) {
+                        if (num>31) {
                             Toast.makeText(DayEditorActivity.this, "天数请从1-31中选一", Toast.LENGTH_SHORT).show();
                             s.clear();
                         }
