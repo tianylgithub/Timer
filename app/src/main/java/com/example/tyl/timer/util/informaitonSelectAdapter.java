@@ -19,17 +19,17 @@ import com.example.tyl.timer.service.MyService;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
+/**     展示需要选择结果事务的适配器
  * Created by TYL on 2017/7/8.
  */
 
-public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.ViewHolder> {
+public class informaitonSelectAdapter extends RecyclerView.Adapter<informaitonSelectAdapter.ViewHolder> {
 
     LinkedList<Information> mInformationSelectList = MyService.sSelectActivitiesList;
 
     ShowInformationSelectActivity mShowInformationSelectActivity;
 
-   public  SelectAdapter(ShowInformationSelectActivity showInformationSelectActivity) {
+   public informaitonSelectAdapter(ShowInformationSelectActivity showInformationSelectActivity) {
         mShowInformationSelectActivity = showInformationSelectActivity;
     }
     class ViewHolder extends RecyclerView.ViewHolder {

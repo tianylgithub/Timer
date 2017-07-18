@@ -30,10 +30,9 @@ import com.example.tyl.timer.util.MyDatabaseHelper;
 import java.util.Collections;
 import java.util.LinkedList;
 
-/**
+/**占时相应天里的事务
  * Created by TYL on 2017/6/12.
  */
-//该界面里的所有操作对数据库的直接更改在返回时，为查看当天信息的界面
 public class        ShowInformationActivity extends AppCompatActivity{
     int dayID;
     int year;

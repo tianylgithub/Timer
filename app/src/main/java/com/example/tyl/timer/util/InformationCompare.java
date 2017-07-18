@@ -2,7 +2,7 @@ package com.example.tyl.timer.util;
 
 import java.util.Comparator;
 
-/**  目的，由大到小排   值>0. o1在o2后面
+/**   对information进行排序，  由大到小排
  * Created by TYL on 2017/6/18.
  */
 

@@ -15,6 +15,12 @@ import com.example.tyl.timer.util.SearchAdapterInformation;
 
 import java.util.ArrayList;
 
+
+/**
+ * 展示search结果的界面
+ */
+
+
 public class ShowSearchActivity extends AppCompatActivity {
     static final int DAY = 1;
     static final int INFORMATION = 2;

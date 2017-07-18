@@ -81,7 +81,7 @@ public class DefaultItemTouchHelpCallback extends ItemTouchHelper.Callback {
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
 
             int dragFlag = 0;
-            int     swipFlag = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;        //这里根据本应用的情况改写，源码请参照： http://blog.csdn.net/yanzhenjie1003/article/details/51935982
+            int     swipFlag = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
 
             return makeMovementFlags(dragFlag, swipFlag);
     }
@@ -114,11 +114,5 @@ public class DefaultItemTouchHelpCallback extends ItemTouchHelper.Callback {
              */
             void onSwiped(int adapterPosition);
 
-            /**
-             * 当两个Item位置互换的时候被回调
-             * @param srcPosition   拖拽item的position
-             * @param targetPosition    目的地item的position
-             * @return              开发者处理了操作返回true，开发者没有处理返回false
-             */
         }
 }

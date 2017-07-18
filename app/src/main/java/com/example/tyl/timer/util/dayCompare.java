@@ -2,7 +2,7 @@ package com.example.tyl.timer.util;
 
 import java.util.Comparator;
 
-/**
+/** 对day进行排序
  * Created by TYL on 2017/6/18.
  */
 

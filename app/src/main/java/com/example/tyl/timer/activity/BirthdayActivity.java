@@ -18,13 +18,18 @@ import android.widget.Toast;
 import com.example.tyl.timer.R;
 import com.example.tyl.timer.util.TimeUtil;
 
+
+/**
+ * 填写出生日期的界面
+ */
+
+
 public class BirthdayActivity extends AppCompatActivity {
 
     EditText birth_year;
     EditText birth_month;
     EditText birth_day;
     Button dataButton;
-
 
 
     class mTextWatcher implements TextWatcher {
@@ -139,7 +144,7 @@ public class BirthdayActivity extends AppCompatActivity {
                             editor.putInt("birthMonth", intMonth);
                             editor.putInt("birthDay", intDay);
                             editor.apply();
-                            Intent intent = new Intent(BirthdayActivity.this, ShowPictureActivity.class);
+                            Intent intent = new Intent(BirthdayActivity.this, ShowStatisticsActivity.class);
                             startActivity(intent);
                             BirthdayActivity.this.finish();
                             Log.d("BirthdayActivity", "Birthday界面结束");

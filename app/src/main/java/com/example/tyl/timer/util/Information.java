@@ -1,6 +1,6 @@
 package com.example.tyl.timer.util;
 
-/**
+/**  infomation类
  * Created by TYL on 2017/6/12.
  */
 

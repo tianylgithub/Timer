@@ -2,12 +2,8 @@ package com.example.tyl.timer.util;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 
-import com.example.tyl.timer.service.MyService;
-
-/**
+/** 自定义MyApplication,方便在程序中获得context
  * Created by TYL on 2017/6/23.
  */
 

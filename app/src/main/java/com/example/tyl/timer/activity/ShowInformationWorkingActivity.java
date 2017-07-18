@@ -17,23 +17,28 @@ import com.example.tyl.timer.R;
 import com.example.tyl.timer.fragment.EditorFragment;
 import com.example.tyl.timer.service.MyService;
 import com.example.tyl.timer.util.Day;
-import com.example.tyl.timer.util.InfoHintAdapter;
+import com.example.tyl.timer.util.InformationWorkingAdapter;
 import com.example.tyl.timer.util.Information;
 import com.example.tyl.timer.util.MyDatabaseHelper;
 
 import java.util.List;
 
-public class ShowInformationHintActivity extends AppCompatActivity {
+
+/**
+ * 展示正在运行的事务界面
+ */
+
+
+public class ShowInformationWorkingActivity extends AppCompatActivity {
 
     Toolbar infoHintToolbar;
     RecyclerView mInfoRecyclerView;
-    InfoHintAdapter mInfoHintAdapter;
+    InformationWorkingAdapter mInfoHintAdapter;
 
     private ServiceConnection mServiceConnection;
 
     protected void onCreate(Bundle savedInstanceState) {
 //        Log.d("ShowInformationHint", "onCreate方法执行");
-//        Log.d("ShowInformationHint", "Task为" + getTaskId()+"创建建建建建建建建建建建建建建建建建建建建建建建建建建建建建建建建建建建");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_information_working);
         infoHintToolbar = (Toolbar) findViewById(R.id.infoHint);
@@ -87,7 +92,7 @@ public class ShowInformationHintActivity extends AppCompatActivity {
             bindService(intent1, mServiceConnection, BIND_AUTO_CREATE);
         }                                                                                  //此时不是第一次登陆
 //        Log.d("ShowInformationHint", "已经跳过");
-        mInfoHintAdapter = new InfoHintAdapter();
+        mInfoHintAdapter = new InformationWorkingAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mInfoRecyclerView.setLayoutManager(layoutManager);
         mInfoRecyclerView.setAdapter(mInfoHintAdapter);
@@ -103,7 +108,7 @@ public class ShowInformationHintActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(ShowInformationHintActivity.this, MainActivity.class);
+        Intent intent = new Intent(ShowInformationWorkingActivity.this, MainActivity.class);
         startActivity(intent);
         return true;
     }
@@ -122,7 +127,5 @@ public class ShowInformationHintActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        Log.d("ShowinformationHint", "Task"+getTaskId()+"销毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁");
-
     }
 }

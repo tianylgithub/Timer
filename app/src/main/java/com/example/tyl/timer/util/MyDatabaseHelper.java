@@ -5,22 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 
 /**数据库工具
- *
- * 1、创建数据库以及两张表（TABLE_INFO,TABLE_DAY）,
- *
- * 2、
- *
  * Created by TYL on 2017/6/11.
  *
  */
-
 
 public class MyDatabaseHelper extends SQLiteOpenHelper  {
 //info 状态
@@ -110,11 +103,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
         db.execSQL(CREATE_TABLE1);
         db.execSQL(CREATE_TABLE2);
         db.execSQL(CREATE_TRIGGER1);
-        Log.d("trigger1", "trigger1创建成功");
+//        Log.d("trigger1", "trigger1创建成功");
         db.execSQL(CREATE_TRIGGER2);
-        Log.d("trigger2", "trigger2创建成功");
+//        Log.d("trigger2", "trigger2创建成功");
         db.execSQL(CREATE_TRIGGER3);
-        Log.d("trigger2", "trigger2创建成功");
+//        Log.d("trigger2", "trigger2创建成功");
     }
 
     @Override
@@ -159,6 +152,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
 //    }
 
 
+    /**
+     * 根据 dayID拿到对应day的status值
+     * @param dayID
+    * @return
+     */
+
     public static int getStatusByDayID(int dayID) {
    Cursor cursor= mSQLiteDatabase.query("TABLE_DAY", null, "id=?", new String[]{dayID + ""}, null, null, null);
         if (cursor.moveToFirst()) {
@@ -169,7 +168,21 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
 
 
 
-    public static boolean have_search_haveData(String year, String month, String day, String information) {
+
+
+
+    /**
+     * 根据year、month、day、information查看数据库中是否有满足条件的数据
+     * @param year
+     * @param month
+     * @param day
+     * @param information
+     * @return
+     */
+
+
+
+    public static boolean havesearchData(String year, String month, String day, String information) {
         String yearUtil;
         String monthUtil;
         String dayUtil;
@@ -212,12 +225,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
     }
 
 
-
-
-
-
-
-
+    /***
+     *根据year,month,day,information查找day（information==null） 或infromation（information!=null）数据
+     * @param year
+     * @param month
+     * @param day
+     * @param information
+     * @return
+     */
 
     public   static     ArrayList searchData(String year,String month,String day,String information)
     {
@@ -293,7 +308,11 @@ Cursor  cursor=mSQLiteDatabase.query("TABLE_INFO", null, yearUtil+monthUtil+dayU
 
 
 
-
+    /**
+     * 根据提供的day查看数据库中是否存在相应的day数据
+     * @param dayUsed
+     * @return
+     */
     public static boolean havaList(Day dayUsed) {
         Cursor cursor = mSQLiteDatabase.query("TABLE_INFO", null, "dayID=?", new String[]{dayUsed.getId() + ""}, null, null, null);
         if (cursor.moveToFirst()) {
@@ -303,8 +322,6 @@ Cursor  cursor=mSQLiteDatabase.query("TABLE_INFO", null, yearUtil+monthUtil+dayU
         cursor.close();
         return false;
     }
-
-
 
 
 

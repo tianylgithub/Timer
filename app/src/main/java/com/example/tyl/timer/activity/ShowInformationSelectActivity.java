@@ -15,14 +15,20 @@ import com.example.tyl.timer.R;
 import com.example.tyl.timer.service.MyService;
 import com.example.tyl.timer.util.Information;
 import com.example.tyl.timer.util.MyDatabaseHelper;
-import com.example.tyl.timer.util.SelectAdapter;
+import com.example.tyl.timer.util.informaitonSelectAdapter;
 
 import java.util.List;
+
+
+/**
+ * 展示需要选择结果的事务的界面
+ */
+
 public class ShowInformationSelectActivity extends AppCompatActivity {
     Toolbar mToolbar;
     RecyclerView mRecyclerView;
-    SelectAdapter mAdapter;
-    public SelectAdapter getAdapter() {
+    informaitonSelectAdapter mAdapter;
+    public informaitonSelectAdapter getAdapter() {
         return mAdapter;
     }
 
@@ -48,7 +54,6 @@ public class ShowInformationSelectActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //        Log.d("ShowInformationSelect", "onCreate方法执行");
-//        Log.d("ShowInformationSelect", "Task" + getTaskId()+"创建建建建建建建建建建建建建建建建建建建建建建建建建建建建建建建建建建建");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_information_select);
         Intent intent1 = new Intent(this, MyService.class);
@@ -101,7 +106,7 @@ public class ShowInformationSelectActivity extends AppCompatActivity {
         }
 //        Log.d("ShowInformationSelect", "已经跳过");
 
-        mAdapter = new SelectAdapter(this);
+        mAdapter = new informaitonSelectAdapter(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);}
@@ -124,6 +129,5 @@ public class ShowInformationSelectActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        Log.d("ShowInformationSelect", "Task" + getTaskId()+"销毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁毁");
     }
 }

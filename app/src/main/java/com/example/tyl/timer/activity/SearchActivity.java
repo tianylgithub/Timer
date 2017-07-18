@@ -14,12 +14,18 @@ import com.example.tyl.timer.R;
 import com.example.tyl.timer.util.MyDatabaseHelper;
 import com.example.tyl.timer.util.TimeUtil;
 
+
+/**
+ *搜索界面
+ */
+
+
 public class SearchActivity extends AppCompatActivity {
     class mTextWatcher1 implements TextWatcher {
         EditText mEditText;
         mTextWatcher1(EditText e) {
             mEditText = e;
-        }                                       //此时需要让你年份成为四位数
+        }
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -37,7 +43,7 @@ public class SearchActivity extends AppCompatActivity {
                 int num = Integer.valueOf(s.toString());
                 int len = s.toString().length();
                 if (len == 1 && num == 0) {
-                    Toast.makeText(SearchActivity.this, "年月日需要以0开头吗?！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, "年月日不需要以0开头", Toast.LENGTH_SHORT).show();
                     s.clear();
                 }
                 switch (mEditText.getId()) {
@@ -99,7 +105,7 @@ public class SearchActivity extends AppCompatActivity {
                 String information = information_search.getText().toString();
                 information = (information.equals("") ? null : information);
 
-                if (MyDatabaseHelper.have_search_haveData(year, month, day, information)) {
+                if (MyDatabaseHelper.havesearchData(year, month, day, information)) {
                     Intent intent = new Intent(SearchActivity.this, ShowSearchActivity.class);
                     intent.putExtra("year", year);
                     intent.putExtra("month", month);

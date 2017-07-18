@@ -20,14 +20,14 @@ import android.util.Log;
 
 import com.example.tyl.timer.R;
 import com.example.tyl.timer.activity.MainActivity;
-import com.example.tyl.timer.activity.ShowInformationHintActivity;
+import com.example.tyl.timer.activity.ShowInformationWorkingActivity;
 import com.example.tyl.timer.activity.ShowInformationSelectActivity;
 import com.example.tyl.timer.fragment.EditorFragment;
 import com.example.tyl.timer.util.Day;
 import com.example.tyl.timer.util.DayCompare;
 import com.example.tyl.timer.util.DaysAdapter;
 import com.example.tyl.timer.util.Information;
-import com.example.tyl.timer.util.Information16Compare;
+import com.example.tyl.timer.util.InformationAboutWorkingAndWarningCompare;
 import com.example.tyl.timer.util.MyApplication;
 import com.example.tyl.timer.util.MyDatabaseHelper;
 import com.example.tyl.timer.util.TimeUtil;
@@ -109,12 +109,12 @@ public class MyService extends Service {
 
                 LinkedList<Information> inforList6 = MyDatabaseHelper.getTargetInfoWaring();         //WARNING(6)信息
                 if (inforList6 != null) {
-                    Collections.sort(inforList6, new Information16Compare());
+                    Collections.sort(inforList6, new InformationAboutWorkingAndWarningCompare());
                     sSelectActivitiesList = inforList6;
                 }
                 LinkedList<Information> inforList1 = MyDatabaseHelper.getTargetInfoWorking();         //WORKING(1)信息
                 if (inforList1 != null) {
-                    Collections.sort(inforList1, new Information16Compare());
+                    Collections.sort(inforList1, new InformationAboutWorkingAndWarningCompare());
                     sInformationHintList = inforList1;
                     for (Information infoUsed : inforList1) {
                         int id = infoUsed.getId();
@@ -160,7 +160,7 @@ public class MyService extends Service {
                         sInformationMap.put(id, infoUsed);
 
                         int requestCode1 = Integer.valueOf("11" + id);       //开始任务提醒为
-                        Intent intent1 = new Intent(MyService.this, ShowInformationHintActivity.class);
+                        Intent intent1 = new Intent(MyService.this, ShowInformationWorkingActivity.class);
                         intent1.putExtra("infoID", id);
                         PendingIntent pendingIntent2 = PendingIntent.getActivity(MyService.this, requestCode1, intent1, 0);
                         alarmManager.setExact(AlarmManager.RTC_WAKEUP, begin, pendingIntent2);
@@ -292,7 +292,7 @@ public class MyService extends Service {
             long begin = TimeUtil.getMillis(year, month, day, hour, minute);            //根据年月日获得毫秒时间，便于对在下个活动中取出对数据库操作。
             long EndTriggerTime = begin + triggerLast;
             int requestCode1 = Integer.valueOf("11" + id);       //开始任务提醒为
-            Intent intent1 = new Intent(MyService.this, ShowInformationHintActivity.class);
+            Intent intent1 = new Intent(MyService.this, ShowInformationWorkingActivity.class);
             intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //            intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent1.putExtra("infoID", id);
@@ -316,7 +316,7 @@ public class MyService extends Service {
             int requestCode1 = Integer.valueOf("11" + id);
             int requestCode2 = Integer.valueOf("22" + id);
             Intent intent = new Intent();
-            Intent intent1 = new Intent(MyService.this, ShowInformationHintActivity.class);
+            Intent intent1 = new Intent(MyService.this, ShowInformationWorkingActivity.class);
             Intent intent2 = new Intent(MyService.this, ShowInformationSelectActivity.class);
             PendingIntent pendingIntent1 = PendingIntent.getActivity(MyService.this, requestCode1, intent1, 0);
             PendingIntent pendingIntent2 = PendingIntent.getActivity(MyService.this, requestCode2, intent2, 0);
@@ -357,7 +357,7 @@ public class MyService extends Service {
                 builder.setSmallIcon(R.drawable.infoworkingforeground);
                 builder.setContentTitle("日期:" + year + "." + month + "." + day  + "  正在进行事务:" + num);
                 builder.setAutoCancel(false).setPriority(NotificationCompat.PRIORITY_MAX);
-                Intent intent = new Intent(MyService.this, ShowInformationHintActivity.class);
+                Intent intent = new Intent(MyService.this, ShowInformationWorkingActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 PendingIntent pendingIntent = PendingIntent.getActivity(MyService.this, 0, intent, 0);
@@ -405,7 +405,7 @@ public class MyService extends Service {
                 builder.setSmallIcon(R.drawable.infoworkingforeground);
                 builder.setContentTitle("日期:" + year + "." + month + "." + day  + "  正在进行事务:" + num);
                 builder.setAutoCancel(false).setPriority(NotificationCompat.PRIORITY_MAX);
-                Intent intent = new Intent(MyService.this, ShowInformationHintActivity.class);
+                Intent intent = new Intent(MyService.this, ShowInformationWorkingActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 PendingIntent pendingIntent = PendingIntent.getActivity(MyService.this, 0, intent, 0);
@@ -436,7 +436,7 @@ public class MyService extends Service {
 //            Log.d("Myservice", "showActivity执行selsect");
 
         } else if (sInformationHintList.size() != 0) {
-            Intent intent = new Intent(MyService.this, ShowInformationHintActivity.class);
+            Intent intent = new Intent(MyService.this, ShowInformationWorkingActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             MyService.this.startActivity(intent);
@@ -474,7 +474,7 @@ public class MyService extends Service {
             builder.setSmallIcon(R.drawable.infoworkingforeground);
             builder.setContentTitle("日期:" + year + "年" + month + "月" + day + "日" + "  正在进行事务:" + num);
             builder.setAutoCancel(false).setPriority(NotificationCompat.PRIORITY_MAX);
-            Intent intent = new Intent(MyService.this, ShowInformationHintActivity.class);
+            Intent intent = new Intent(MyService.this, ShowInformationWorkingActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(MyService.this, 0, intent, 0);

@@ -15,14 +15,16 @@ import com.example.tyl.timer.R;
 import com.example.tyl.timer.util.MyDatabaseHelper;
 import com.example.tyl.timer.util.TimeUtil;
 
-public class ShowPictureActivity extends AppCompatActivity {
+
+/**
+ * 展示统计信息界面
+ */
+public class ShowStatisticsActivity extends AppCompatActivity {
 
 
     Toolbar mToolbar;
 
-
     static final int AVERAGE = 27760;                   //按照人类平均寿命(76)岁记录，人一辈子有27760天
-
     int birthYear;
     int birthMonth;
     int birthDay;
@@ -77,7 +79,7 @@ public class ShowPictureActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("ShowPictureActivity", "onCreate方法执行");
+        Log.d("ShowStatisticsActivity", "onCreate方法执行");
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_show_picture);
@@ -91,7 +93,7 @@ public class ShowPictureActivity extends AppCompatActivity {
        birthMonth= preferences.getInt("birthMonth", -1);
        birthDay= preferences.getInt("birthDay", -1);
         if (birthYear == -1) {                  //需要输入生日
-//            Log.d("ShowPictureActivity", "启动birthday编写界面");
+//            Log.d("ShowStatisticsActivity", "启动birthday编写界面");
             Intent intent = new Intent(this, BirthdayActivity.class);
             startActivity(intent);
         }
@@ -100,7 +102,7 @@ public class ShowPictureActivity extends AppCompatActivity {
          beginYear = prf.getInt("beginYear", 0);
          beginMonth = prf.getInt("beginMonth", 0);
          beginDay = prf.getInt("beginDay", 0);
-//        Log.d("ShowPictureActivity", "beginYear:" + beginYear + "beginMonth:" + beginMonth + "beginDay:" + beginDay);
+//        Log.d("ShowStatisticsActivity", "beginYear:" + beginYear + "beginMonth:" + beginMonth + "beginDay:" + beginDay);
 
          yearNow = TimeUtil.getYear();                                               //year now
          monthNow = TimeUtil.getMonth();                                             //month now
@@ -212,7 +214,7 @@ public class ShowPictureActivity extends AppCompatActivity {
         double g = (dayUnMarkNum * 100 / dayNumFromBegin / 1.0);           //无记率
         double h = (infoALL*100/ dayNumFromBegin / 100.0);                //每天平均事务数量
         begin_day_text1.setText("从使用本应用开始有"+dayUnMarkNum+"天没有任何记录,无记率为"+g+"%,平均每天事务数量为"+h+"件/天");
-        Log.d("ShowPictureActivity", beginYear + ":" + beginMonth + ":" + beginDay );
+        Log.d("ShowStatisticsActivity", beginYear + ":" + beginMonth + ":" + beginDay );
 
 
 

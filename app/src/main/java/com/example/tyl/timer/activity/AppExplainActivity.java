@@ -7,6 +7,12 @@ import android.widget.Toast;
 
 import com.example.tyl.timer.R;
 
+/**
+ * 说明app的大体功能和应用中图标代表的意义
+ */
+
+
+
 public class AppExplainActivity extends AppCompatActivity {
 
     TextView mTextView;

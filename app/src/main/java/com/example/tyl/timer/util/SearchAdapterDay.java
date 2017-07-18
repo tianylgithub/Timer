@@ -15,7 +15,7 @@ import com.example.tyl.timer.activity.ShowSearchActivity;
 
 import java.util.ArrayList;
 
-/**
+/** 展示day搜索结果的适配器
  * Created by TYL on 2017/7/10.
  */
 

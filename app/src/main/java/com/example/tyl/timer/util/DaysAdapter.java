@@ -17,7 +17,7 @@ import com.example.tyl.timer.activity.ShowInformationActivity;
 
 import java.util.List;
 
-/**
+/**  列表 展示 day 适配器
  * Created by TYL on 2017/6/15.
  */
 

@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this.startActivity(intent2);
                         break;
                     case R.id.nav_showlife:
-                        Intent intent3 = new Intent(MainActivity.this, ShowPictureActivity.class);
+                        Intent intent3 = new Intent(MainActivity.this, ShowStatisticsActivity.class);
                         MainActivity.this.startActivity(intent3);
 
                         break;

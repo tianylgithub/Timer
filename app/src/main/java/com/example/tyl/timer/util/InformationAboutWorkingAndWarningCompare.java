@@ -2,11 +2,11 @@ package com.example.tyl.timer.util;
 
 import java.util.Comparator;
 
-/**
+/** 对infomation状态为working（1）或者warning（6）进行排序
  * Created by TYL on 2017/7/8.
  */
 
-public class Information16Compare implements Comparator<Information> {
+public class InformationAboutWorkingAndWarningCompare implements Comparator<Information> {
     @Override
 
 

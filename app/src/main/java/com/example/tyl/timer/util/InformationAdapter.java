@@ -24,7 +24,7 @@ import static com.example.tyl.timer.R.id.begin_time;
 import static com.example.tyl.timer.util.MyDatabaseHelper.sMyDatabaseHelper;
 
 
-/**
+/**  information是适配器
  * Created by TYL on 2017/6/16.
  */
 

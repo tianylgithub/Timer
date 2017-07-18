@@ -11,11 +11,11 @@ import com.example.tyl.timer.service.MyService;
 
 import java.util.LinkedList;
 
-/**
+/** 展示正在进行事务的适配器
  * Created by TYL on 2017/7/8.
  */
 
-public class InfoHintAdapter extends RecyclerView.Adapter<InfoHintAdapter.ViewHolder> {
+public class InformationWorkingAdapter extends RecyclerView.Adapter<InformationWorkingAdapter.ViewHolder> {
 
     LinkedList<Information> mInformationHintList = MyService.sInformationHintList;
 
