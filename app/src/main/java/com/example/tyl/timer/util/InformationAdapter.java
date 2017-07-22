@@ -256,8 +256,8 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
 
                                    Day day=  getDayFromDaylistByDayID(information.getDayID());
                                    if (day != null) {
-                                       day.plusAll();
-                                       day.plusTheRest();
+                                       day.minusAll();
+                                       day.minusTheRest();
                                        EditorFragment.getDaysAdapter().notifyDataSetChanged();
                                    }
                                    Collections.sort(mInformationList, new InformationCompare());

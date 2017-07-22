@@ -20,8 +20,8 @@ import android.util.Log;
 
 import com.example.tyl.timer.R;
 import com.example.tyl.timer.activity.MainActivity;
-import com.example.tyl.timer.activity.ShowInformationWorkingActivity;
 import com.example.tyl.timer.activity.ShowInformationSelectActivity;
+import com.example.tyl.timer.activity.ShowInformationWorkingActivity;
 import com.example.tyl.timer.fragment.EditorFragment;
 import com.example.tyl.timer.util.Day;
 import com.example.tyl.timer.util.DayCompare;
@@ -33,7 +33,6 @@ import com.example.tyl.timer.util.MyDatabaseHelper;
 import com.example.tyl.timer.util.TimeUtil;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class MyService extends Service {
     static AlarmManager alarmManager = (AlarmManager) MyApplication.getContex().getSystemService(Context.ALARM_SERVICE);
     public static LinkedList<Information> sInformationHintList = new LinkedList<Information>();
     public static LinkedList<Information> sSelectActivitiesList = new LinkedList<Information>();
-    public static HashMap<Integer, Information> sInformationMap = new HashMap();
+//    public static HashMap<Integer, Information> sInformationMap = new HashMap();
 
     public static final int SEVICEBEGIN = 2;
     public static final int NORMAL = 3;
@@ -129,11 +128,15 @@ public class MyService extends Service {
                         long begin = TimeUtil.getMillis(year, month, day, hour, minute);            //根据年月日获得毫秒时间，便于对在下个活动中取出对数据库操作。
                         long EndTriggerTime = begin + triggerLast;
 
-                        sInformationMap.put(id, infoUsed);
+//                        sInformationMap.put(id, infoUsed);
+
+
+
 
                         int requestCode2 = Integer.valueOf("22" + id);          //根据设定的时间给intent确定唯一性，用于取消同一事物。（不用triggerattime因为int和long的取值矛盾）
                         Intent intent2 = new Intent(MyService.this, ShowInformationSelectActivity.class);          //创建任务结束时的提醒
-                        intent2.putExtra("infoID", id);
+//                        intent2.putExtra("infoID", id);
+                        intent2.putExtra("information", infoUsed);
                         PendingIntent pendingIntent1 = PendingIntent.getActivity(MyService.this, requestCode2, intent2, 0);
                         alarmManager.setExact(AlarmManager.RTC_WAKEUP, EndTriggerTime, pendingIntent1);
                     }
@@ -157,17 +160,20 @@ public class MyService extends Service {
                         long begin = TimeUtil.getMillis(year, month, day, hour, minute);            //根据年月日获得毫秒时间，便于对在下个活动中取出对数据库操作。
                         long EndTriggerTime = begin + triggerLast;
 
-                        sInformationMap.put(id, infoUsed);
+
+//                        sInformationMap.put(id, infoUsed);
 
                         int requestCode1 = Integer.valueOf("11" + id);       //开始任务提醒为
                         Intent intent1 = new Intent(MyService.this, ShowInformationWorkingActivity.class);
-                        intent1.putExtra("infoID", id);
+//                        intent1.putExtra("infoID", id);
+                        intent1.putExtra("information", infoUsed);
                         PendingIntent pendingIntent2 = PendingIntent.getActivity(MyService.this, requestCode1, intent1, 0);
                         alarmManager.setExact(AlarmManager.RTC_WAKEUP, begin, pendingIntent2);
 
                         int requestCode2 = Integer.valueOf("22" + id);          //根据设定的时间给intent确定唯一性，用于取消同一事物。（不用triggerattime因为int和long的取值矛盾）
                         Intent intent2 = new Intent(MyService.this, ShowInformationSelectActivity.class);          //创建任务结束时的提醒
-                        intent2.putExtra("infoID", id);
+//                        intent2.putExtra("infoID", id);
+                        intent2.putExtra("information", infoUsed);
                         PendingIntent pendingIntent1 = PendingIntent.getActivity(MyService.this, requestCode2, intent2, 0);
                         alarmManager.setExact(AlarmManager.RTC_WAKEUP, EndTriggerTime, pendingIntent1);
                     }
@@ -280,8 +286,12 @@ public class MyService extends Service {
     public class AlarmBinder extends Binder {
         public void startAlarm(final Information infoUsed) {
             Log.d("Myservice", "任务开始启动");
+
+
+            Information information = infoUsed;
+
             int id = infoUsed.getId();
-            sInformationMap.put(id, infoUsed);
+//            sInformationMap.put(id, infoUsed);
             int year = infoUsed.getYear();
             int month = infoUsed.getMonth();
             int day = infoUsed.getDay();
@@ -292,17 +302,22 @@ public class MyService extends Service {
             long begin = TimeUtil.getMillis(year, month, day, hour, minute);            //根据年月日获得毫秒时间，便于对在下个活动中取出对数据库操作。
             long EndTriggerTime = begin + triggerLast;
             int requestCode1 = Integer.valueOf("11" + id);       //开始任务提醒为
+
+
             Intent intent1 = new Intent(MyService.this, ShowInformationWorkingActivity.class);
             intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //            intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent1.putExtra("infoID", id);
+//            intent1.putExtra("infoID", id);
+
+            intent1.putExtra("information", information);
             PendingIntent pendingIntent1 = PendingIntent.getActivity(MyService.this, requestCode1, intent1, 0);
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, begin, pendingIntent1);
             int requestCode2 = Integer.valueOf("22" + id);                                      //根据设定的时间给intent确定唯一性，用于取消同一事物。（不用triggerattime因为int和long的取值矛盾）
             Intent intent2 = new Intent(MyService.this, ShowInformationSelectActivity.class);          //创建任务结束时的提醒
             intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //            intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent2.putExtra("infoID", id);
+//            intent2.putExtra("infoID", id);
+            intent2.putExtra("information", information);
             PendingIntent pendingIntent2 = PendingIntent.getActivity(MyService.this, requestCode2, intent2, 0);
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, EndTriggerTime, pendingIntent2);
             infoAlarmChangeForeground();
@@ -310,9 +325,11 @@ public class MyService extends Service {
         }
         public void cancelAlarm(final Information infoUsed) {                     //取消任务
 
+//            Information information = infoUsed;
+
             Log.d("Myservice", "任务取消开始");
             int id = infoUsed.getId();
-            sInformationMap.remove(id);
+//            sInformationMap.remove(id);
             int requestCode1 = Integer.valueOf("11" + id);
             int requestCode2 = Integer.valueOf("22" + id);
             Intent intent = new Intent();
@@ -375,9 +392,7 @@ public class MyService extends Service {
             }
             Notification notification = builder.build();
             startForeground(1, notification);
-
         }
-
         public void infoAlarmChangeForeground() {
             int dayID = todayID;
             Day date = MyDatabaseHelper.getDayByID(dayID);
@@ -423,7 +438,6 @@ public class MyService extends Service {
             }
             Notification notification = builder.build();
             startForeground(1, notification);
-
         }
     }
     public void showActivity() {
@@ -495,5 +509,4 @@ public class MyService extends Service {
         Notification notification = builder.build();
         startForeground(1, notification);
     }
-
 }

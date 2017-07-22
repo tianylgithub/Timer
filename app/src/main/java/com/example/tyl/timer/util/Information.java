@@ -1,11 +1,14 @@
 package com.example.tyl.timer.util;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**  infomation类
  * Created by TYL on 2017/6/12.
  */
 
-//public class Information implements Parcelable {
-public class Information  {
+public class Information implements Parcelable {
+//public class Information  {
 
     private int id = -1;
     private int dayID;
@@ -98,43 +101,52 @@ public class Information  {
         this.information = information;
     }
 
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeInt(id);
-//        dest.writeInt(dayID);
-//        dest.writeInt(year);
-//        dest.writeInt(month);
-//        dest.writeInt(day);
-//        dest.writeInt(hour);
-//        dest.writeInt(minute);
-//        dest.writeInt(lastTime);
-//        dest.writeInt(completed);
-//        dest.writeString(information);
-//    }
-//    public static final Parcelable.Creator<Information> CREATOR = new Parcelable.Creator<Information>() {
-//        @Override
-//        public Information createFromParcel(Parcel source) {
-//            Information information1 = new Information();
-//            information1.id = source.readInt();
-//            information1.dayID = source.readInt();
-//            information1.year = source.readInt();
-//            information1.month = source.readInt();
-//            information1.day = source.readInt();
-//            information1.hour = source.readInt();
-//            information1.minute = source.readInt();
-//            information1.lastTime = source.readInt();
-//            information1.completed = source.readInt();
-//            information1.information = source.readString();
-//            return information1;
-//        }
-//        @Override
-//        public Information[] newArray(int size) {
-//            return new Information[size];
-//        }
-//    };
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(dayID);
+        dest.writeInt(year);
+        dest.writeInt(month);
+        dest.writeInt(day);
+        dest.writeInt(hour);
+        dest.writeInt(minute);
+        dest.writeInt(lastTime);
+        dest.writeInt(completed);
+        dest.writeString(information);
+    }
+    public static final Parcelable.Creator<Information> CREATOR = new Parcelable.Creator<Information>() {
+        @Override
+        public Information createFromParcel(Parcel source) {
+            Information information1 = new Information();
+            information1.id = source.readInt();
+            information1.dayID = source.readInt();
+            information1.year = source.readInt();
+            information1.month = source.readInt();
+            information1.day = source.readInt();
+            information1.hour = source.readInt();
+            information1.minute = source.readInt();
+            information1.lastTime = source.readInt();
+            information1.completed = source.readInt();
+            information1.information = source.readString();
+            return information1;
+        }
+        @Override
+        public Information[] newArray(int size) {
+            return new Information[size];
+        }
+    };
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Information)) {
+            return false;
+        }
+        return id == ((Information) obj).getId();
+    }
 }

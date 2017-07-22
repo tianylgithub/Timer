@@ -51,11 +51,19 @@ public class ShowInformationWorkingActivity extends AppCompatActivity {
 
         mInfoRecyclerView = (RecyclerView) findViewById(R.id.infoHintRecyclerView);
 
-        int Id =  getIntent().getIntExtra("infoID", -1);
+//        int Id =  getIntent().getIntExtra("infoID", -1);
+
+        Information information = getIntent().getParcelableExtra("information");
+
+
+
 //        Log.d("ShowInfoHint", Id + "");
-        if (Id!=-1) {                                                          //定时任务触发
+//        if (Id!=-1) {                                                          //定时任务触发
+        if (information != null) {
             Log.d("ShowInformationHint", "infohint执行定时任务");
-            Information information = MyService.sInformationMap.get(Id);
+//            Information information = MyService.sInformationMap.get(Id);
+
+            int Id = information.getId();
             MyService.sInformationHintList.add(information);
             int dayID = information.getDayID();
 

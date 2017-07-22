@@ -67,15 +67,18 @@ public class ShowInformationSelectActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("需要确定结果的事务");
 
-        int Id = getIntent().getIntExtra("infoID", -1);
+//        int Id = getIntent().getIntExtra("infoID", -1);
 //        Log.d("ShowInfoHint", Id + "");
-        if (Id != -1) {                                                          //定时任务触发
-            Log.d("ShowInformationSelect", "定时任务执行");
+        Information information = getIntent().getParcelableExtra("information");
+//        if (Id != -1) {                                                          //定时任务触发
+            if (information != null) {
 
-            Information information = MyService.sInformationMap.get(Id);
+            Log.d("ShowInformationSelect", "定时任务执行");
+//            Information information = MyService.sInformationMap.get(Id);
             MyService.sSelectActivitiesList.add(information);
             MyService.sInformationHintList.remove(information);
-            MyService.sInformationMap.remove(Id);
+//            MyService.sInformationMap.remove(Id);
+                int Id = information.getId();
 
             MyDatabaseHelper.sMyDatabaseHelper.updateInformationById(Id, 6);              //更改info数据库状态 1 为  6
 

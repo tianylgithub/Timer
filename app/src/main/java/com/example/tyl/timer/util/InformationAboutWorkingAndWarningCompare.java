@@ -9,10 +9,6 @@ import java.util.Comparator;
 public class InformationAboutWorkingAndWarningCompare implements Comparator<Information> {
     @Override
 
-
-
-
-
     public int compare(Information o1, Information o2) {
         int i= (8000000 * (o1.getYear() - o2.getYear()) + 65000 * (o1.getMonth() - o2.getMonth()) + 2000 * (o1.getDay() - o2.getDay()) + 70 * (o1.getHour() - o2.getHour()) + o1.getMinute() - o2.getMinute());
 
