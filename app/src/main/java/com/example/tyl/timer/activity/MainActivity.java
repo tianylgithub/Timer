@@ -108,9 +108,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("MainActivity", "onResume执行");
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("MainActivity", "onRestart执行");
         Intent intent = new Intent(this, MyService.class);
         intent.putExtra("stateID", -99);
         startService(intent);
@@ -159,8 +159,6 @@ public class MainActivity extends AppCompatActivity {
                     EditorFragment.getDaysAdapter().notifyDataSetChanged();
                     EditorFragment.getRecyclerView().smoothScrollToPosition(position);}
                 Toast.makeText(this, "新的日期创建成功,请点击添加任务", Toast.LENGTH_SHORT).show();
-
-
                 break;
             default:
                 break;

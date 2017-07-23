@@ -48,7 +48,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:hint="请输信息关键字"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:inputType="text"
+            />
         <Button
             android:id="@+id/search_button"
             android:layout_width="match_parent"

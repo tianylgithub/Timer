@@ -61,7 +61,7 @@
         android:layout_height="?android:listPreferredItemHeight"
         android:gravity="center_vertical"
         android:maxLines="1"
-
+        android:inputType="text"
         />
     <Button
         android:id="@+id/set_button"
